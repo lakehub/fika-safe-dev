@@ -22,6 +22,7 @@ import {
   Button,
   Card,
   CardHeader,
+  NavbarBrand,
   CardBody,
   FormGroup,
   Form,
@@ -34,14 +35,23 @@ import {
 } from "reactstrap";
 
 class Login extends React.Component {
+  
   render() {
     return (
       <>
         <Col lg="5" md="7">
+
           <Card className="bg-secondary shadow border-0">
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
-                <small>sign in with credentials</small>
+              <div className="container div1" style={{size: "50px"}}>
+              <NavbarBrand >
+              <img alt="..." src={require("assets/img/brand/fikas.png")} />
+            </NavbarBrand>
+              </div>
+
+                <strong>Sign In </strong>
+
               </div>
               <Form role="form">
                 <FormGroup className="mb-3">
