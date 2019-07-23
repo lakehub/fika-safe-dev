@@ -1,23 +1,16 @@
-const sourceMapSupport = require('source-map-support');
-// import queryString from 'query-String'
-// import { MongoClient } from 'mongodb';
+
 const mongoose = require('mongoose');
 
 // mongoose models    .
 const { Sacco, Rider, UserModel } = require('./db.models.js');
 
-
-const _eval = require('eval');
-
-
+//
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
-// require('babel-polyfill');
 
 const ObjectId = require('mongodb').ObjectID;
 
-sourceMapSupport.install();
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -29,14 +22,8 @@ const app = express();
 app.use(express.static('static'));
 
 
-const qpm = require('query-params-mongo');
 const mongodb = require('mongodb');
 const db = require('./keys').mongodbURI;
-
-const processQuery = qpm({
-  autoDetect: [{ fieldPattern: /_id$/, dataType: 'objectId' }],
-  converters: { objectId: mongodb.ObjectID },
-});
 
 
 app.use(bodyParser.json());
@@ -292,7 +279,7 @@ app.put('/api/saccos/:id', (req, res) => {
 
 // creating a connection to mongoose
 // 'mongodb://localhost/fika-safe'
-mongoose.connect('mongodb://localhost/fika-safe', { useNewUrlParser: true })
+mongoose.connect(db, { useNewUrlParser: true })
   .then(() => {
     app.listen(4000, () => {
       console.log('Listening on port 4000');

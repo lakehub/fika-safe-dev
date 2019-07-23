@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   password: String
 });
 
-// pre save functiion
+// pre save function --harsh the password for saving in the db
 UserSchema.pre("save", function (next) {
   if (!this.isModified("password")) {
     return next();
@@ -22,12 +22,12 @@ UserSchema.pre("save", function (next) {
   next();
 });
 
-// compare passwords
+// compare passwords --compare the saved password with the inputted password 
 UserSchema.methods.comparePassword = function (plaintext, callback) {
   return callback(null, bcrypt.compareSync(plaintext, this.password));
 };
 
-UserSchema.methods.comparePassword = (plaintext, callback) => { };
+//UserSchema.methods.comparePassword = (plaintext, callback) => { };
 
 
 
@@ -181,6 +181,7 @@ const riderSchema = new mongoose.Schema({
 // USING PLUGINS T
 saccoSchema.plugin(mongooseUniqueValidator);
 riderSchema.plugin(mongooseUniqueValidator);
+UserSchema.plugin(mongooseUniqueValidator);
 
 // CREATING AND SAVING MONGOOSE MODEL
 // THIS CAN ALSO BE EXPORTED TO ANOTHER MODULARISED FILE
