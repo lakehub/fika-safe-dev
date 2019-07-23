@@ -27,10 +27,7 @@ UserSchema.methods.comparePassword = function (plaintext, callback) {
   return callback(null, bcrypt.compareSync(plaintext, this.password));
 };
 
-//UserSchema.methods.comparePassword = (plaintext, callback) => { };
-
-
-
+// UserSchema.methods.comparePassword = (plaintext, callback) => { };
 
 
 // SCHEMA BLUEPRINTS
