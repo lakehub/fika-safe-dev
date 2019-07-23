@@ -1,21 +1,4 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React from 'react';
 
 // reactstrap components
 import {
@@ -28,24 +11,85 @@ import {
   Input,
   Container,
   Row,
-  Col
-} from "reactstrap";
+  Col,
+} from 'reactstrap';
 // core components
-import UserHeader from "components/Headers/UserHeader.jsx";
+import UserHeader from 'components/Headers/UserHeader.jsx';
 
 class NewSacco extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      description: '',
+      website: '',
+      date_founded: '',
+      name: '',
+      address: '',
+      registration_number: '',
+      password: '',
+      telephone_number: '',
+      email: '',
+      postal_code: 1323131,
+    };
+  }
+
+  // handler functions
+  handleOnChange = ({ target: { name, value } }) => {
+    this.setState({
+      [name]: value,
+    });
+    console.log(this.state);
+  };
+  handleSubmit = () => {
+    const data = this.state;
+    // invoke the saveData with the new data
+    this.saveData(data);
+  };
+
+  saveData = data => {
+    fetch(`/api/saccos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        const { history } = this.props;
+        //history.push(`/admin/index`);
+      })
+      .catch(err => {
+        console.log(err);
+        alert('unable to save the data');
+      });
+  };
+
   render() {
+    // destructuring states
+    const {
+      description,
+      website,
+      date_founded,
+      name,
+      address,
+      registration_number,
+      password,
+      telephone_number,
+      email,
+      postal_code,
+    } = this.state;
     return (
-      <div style={{marginTop: "160px"}}>
+      <div style={{ marginTop: '160px' }}>
         {/* Page content */}
-        <Container  className="mt--7" fluid>
+        <Container className="mt--7" fluid>
           <Row>
             <Col className="order-xl-1" xl="8">
               <Card className="bg-secondary shadow">
                 <CardBody>
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
-                      User information
+                      Sacco information
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
@@ -58,8 +102,10 @@ class NewSacco extends React.Component {
                               Sacco Name
                             </label>
                             <Input
+                              value={name}
+                              onChange={this.handleOnChange}
+                              name="name"
                               className="form-control-alternative"
-                              id="sacconame"
                               placeholder="Sacco Name"
                               type="text"
                             />
@@ -74,8 +120,10 @@ class NewSacco extends React.Component {
                               Email address
                             </label>
                             <Input
+                              value={email}
+                              onChange={this.handleOnChange}
+                              name="email"
                               className="form-control-alternative"
-                              id="input-email"
                               placeholder="Enter email"
                               type="email"
                             />
@@ -92,8 +140,10 @@ class NewSacco extends React.Component {
                               Registration Number
                             </label>
                             <Input
+                              value={registration_number}
+                              onChange={this.handleOnChange}
+                              name="registration_number"
                               className="form-control-alternative"
-                              id="registration-number"
                               placeholder="Registration Number"
                               type="text"
                             />
@@ -108,8 +158,10 @@ class NewSacco extends React.Component {
                               Year Founded
                             </label>
                             <Input
+                              value={date_founded}
+                              onChange={this.handleOnChange}
+                              name="date_founded"
                               className="form-control-alternative"
-                              id="year-founded"
                               placeholder="Year founded"
                               type="text"
                             />
@@ -130,12 +182,14 @@ class NewSacco extends React.Component {
                               className="form-control-label"
                               htmlFor="input-address"
                             >
-                              Address
+                              Location
                             </label>
                             <Input
+                              value={address}
+                              onChange={this.handleOnChange}
+                              name="address"
                               className="form-control-alternative"
-                              id="input-address"
-                              placeholder="Enter Address"
+                              placeholder="Enter Location"
                               type="text"
                             />
                           </FormGroup>
@@ -151,8 +205,10 @@ class NewSacco extends React.Component {
                               Phone
                             </label>
                             <Input
+                              value={telephone_number}
+                              onChange={this.handleOnChange}
+                              name="telephone_number"
                               className="form-control-alternative"
-                              id="phone"
                               placeholder="Enter Phone Number"
                               type="text"
                             />
@@ -167,8 +223,10 @@ class NewSacco extends React.Component {
                               Postal Code
                             </label>
                             <Input
+                              value={postal_code}
+                              name="postal_code"
+                              onChange={this.handleOnChange}
                               className="form-control-alternative"
-                              id="postal-code"
                               placeholder="Postal code"
                               type="number"
                             />
@@ -183,9 +241,11 @@ class NewSacco extends React.Component {
                               Website link
                             </label>
                             <Input
+                              value={website}
+                              name="website"
+                              onChange={this.handleOnChange}
                               className="form-control-alternative"
-                              id="website"
-                              placeholder="website"
+                              placeholder="eg http://www.sacconame.gmail.com"
                               type="text"
                             />
                           </FormGroup>
@@ -201,8 +261,8 @@ class NewSacco extends React.Component {
                               Create Password
                             </label>
                             <Input
+                              name="password1"
                               className="form-control-alternative"
-                              id="password"
                               type="password"
                             />
                           </FormGroup>
@@ -216,8 +276,10 @@ class NewSacco extends React.Component {
                               Confirm Password
                             </label>
                             <Input
+                              value={password}
+                              onChange={this.handleOnChange}
                               className="form-control-alternative"
-                              id="confirm-password"
+                              name="password"
                               type="password"
                             />
                           </FormGroup>
@@ -231,6 +293,9 @@ class NewSacco extends React.Component {
                       <FormGroup>
                         <label>Description</label>
                         <Input
+                          value={description}
+                          onChange={this.handleOnChange}
+                          name="description"
                           className="form-control-alternative"
                           placeholder="A few words about you..."
                           rows="4"
@@ -238,12 +303,12 @@ class NewSacco extends React.Component {
                         />
                       </FormGroup>
                       <Button
-                  color="info"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                >
-                  Save
-                </Button>
+                        color="info"
+                        href="#pablo"
+                        onClick={this.handleSubmit}
+                      >
+                        Save
+                      </Button>
                     </div>
                   </Form>
                 </CardBody>

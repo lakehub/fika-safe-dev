@@ -29,10 +29,20 @@ class Index extends React.Component {
     super(props);
     console.log(props);
 
-    this.state = { data: [], sortBy: 'name' };
+    this.state = {
+      // data loaded from the array
+      data: [],
+      // sorting data
+      sortBy: 'name',
+      // filter data
+      status: '',
+      dateLte: '2019-10-10', // oldDate
+      dateGte: '2019-10-24', // newDate
+      changed: false,
+    };
 
     this.loadData = this.loadData.bind(this);
-    this.deleteSacco = this.deleteSacco.bind(this);
+    // this.deleteSacco = this.deleteSacco.bind(this);
     this.setFilter = this.setFilter.bind(this);
   }
 
@@ -57,11 +67,11 @@ class Index extends React.Component {
   }
 
   // sorting handler function
-  handleSortChange(event) {
+  handleSortChange = event => {
     this.setState({
       sortBy: event.target.value,
     });
-  }
+  };
 
   // deleteSacco
   deleteSacco(id) {
@@ -97,7 +107,12 @@ class Index extends React.Component {
       <>
         <Header />
         {/* Page content */}
-        <AdminTable data={sortedData} deleteSacco={this.deleteSacco} />
+        <AdminTable
+          data={sortedData}
+          deleteSacco={this.deleteSacco}
+          sortQuery={sortBy}
+          handleSortChange={this.handleSortChange}
+        />
         <Col xl="4" />
       </>
     );

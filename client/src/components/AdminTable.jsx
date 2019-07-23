@@ -27,40 +27,52 @@ import {
 } from 'reactstrap';
 // core components
 import Header from 'components/Headers/Header.jsx';
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
 import AdminRow from 'components/AdminRow.jsx';
 
 export default class TableWhite extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      query: '',
+    };
+  }
+
   render() {
-    const { data, deleteSacco } = this.props;
+    const { data, sortQuery, handleSortChange } = this.props;
     console.log(data);
     const Row = data.map((value, index) => {
       return <AdminRow key={value._id} sacco={value} />;
     });
     return (
       <div>
-      <Link to="/admin/new">
-        <Button style={{margin:"40px", float: "right"}} color="success">New Sacco</Button>
-      </Link>
+        <Link to="/admin/new">
+          <Button style={{ margin: '40px', float: 'right' }} color="success">
+            New Sacco
+          </Button>
+        </Link>
         <br />
         <UncontrolledDropdown style={{ marginTop: '20px' }} group>
           <DropdownToggle caret color="info" data-toggle="dropdown">
             Sort By
           </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem>Sacco Name</DropdownItem>
-            <DropdownItem>Date</DropdownItem>
-            <DropdownItem>Status</DropdownItem>
+          <DropdownMenu value={sortQuery} onClick={handleSortChange}>
+            <DropdownItem value="name">Sacco Name</DropdownItem>
+            <DropdownItem value="created">Date</DropdownItem>
+            <DropdownItem value="address">Location</DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
-
+        {/* search button */}
         <MDBCol style={{ float: 'right' }} md="4">
           <form className="form-inline mt-4 mb-4">
             <MDBIcon icon="search" />
             <input
+              ref={input => (this.search = input)}
+              onChange={this.handleSearchInputChange}
               className="form-control form-control-sm ml-3 w-75"
               type="text"
-              placeholder="Search"
+              placeholder="Search for..."
               aria-label="Search"
             />
           </form>
