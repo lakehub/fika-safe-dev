@@ -282,7 +282,7 @@ app.put('/api/saccos/:id', (req, res) => {
 mongoose.connect(db, { useNewUrlParser: true })
   .then(() => {
     app.listen(4000, () => {
-      console.log('Listening on port 5000');
+      console.log('Listening on port 4000');
     });
   }).catch((error) => {
     console.log({ message: `Unable to establish a connection to the server ${error}` });
