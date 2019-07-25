@@ -89,6 +89,26 @@ const saccoSchema = new mongoose.Schema({
 
 }, { strict: false });
 
+
+
+
+// Adding a text index
+
+saccoSchema.index({
+  name: 'text',
+  description: 'text',
+}, {
+  weights: {
+    name: 5,
+    description: 1,
+  },
+});
+
+
+
+
+
+
 // RIDER SCHEMA
 const riderSchema = new mongoose.Schema({
 
