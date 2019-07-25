@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -33,25 +33,26 @@ import {
   Row,
   Col
 } from "reactstrap";
+// import LoaderButton from "./LoaderButton";
 
 class Login extends React.Component {
-  
   render() {
     return (
       <>
         <Col lg="5" md="7">
-
           <Card className="bg-secondary shadow border-0">
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
-              <div className="container div1" style={{size: "50px"}}>
-              <NavbarBrand >
-              <img alt="..." src={require("assets/img/brand/fikas.png")} />
-            </NavbarBrand>
-              </div>
+                <div className="container div1" style={{ size: "50px" }}>
+                  <NavbarBrand>
+                    <img
+                      alt="..."
+                      src={require("assets/img/brand/fikas.png")}
+                    />
+                  </NavbarBrand>
+                </div>
 
                 <strong>Sign In </strong>
-
               </div>
               <Form role="form">
                 <FormGroup className="mb-3">
@@ -88,10 +89,10 @@ class Login extends React.Component {
                   </label>
                 </div>
                 <div className="text-center">
-                <Link to="/">
-                  <Button className="my-4" color="primary" type="button">
-                    Sign in
-                  </Button>
+                  <Link to="/">
+                    <Button className="my-4" color="primary" type="button">
+                      Sign in
+                    </Button>
                   </Link>
                 </div>
               </Form>
@@ -101,10 +102,10 @@ class Login extends React.Component {
             <Col xs="6">
               <a
                 className="text-light"
-                href="#pablo"
-                onClick={e => e.preventDefault()}
+                href="/auth/reset_password"
+                //onClick={e => e.preventDefault()}
               >
-                <small>Forgot password?</small>
+                <small>forgot password?</small>
               </a>
             </Col>
           </Row>
