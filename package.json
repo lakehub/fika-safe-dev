@@ -41,6 +41,7 @@
   },
   "homepage": "https://github.com/Cyrus-Kiprop/fika-safe#readme",
   "dependencies": {
+    "axios": "0.19.0",
     "bcrypt": "3.0.6",
     "body-parser": "1.19.0",
     "concurrently": "4.1.1",
