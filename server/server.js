@@ -263,7 +263,7 @@ app.get("/api/saccos/:id", (req, res) => {
 });
 
 // post api
-app.post("api/saccos", (req, res) => {
+app.post('/api/saccos', (req, res) => {
   const newSacco = new Sacco(req.body);
   newSacco
     .save()

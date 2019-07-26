@@ -27,8 +27,6 @@ UserSchema.methods.comparePassword = function (plaintext, callback) {
   return callback(null, bcrypt.compareSync(plaintext, this.password));
 };
 
-UserSchema.methods.comparePassword = (plaintext, callback) => { };
-
 
 
 
@@ -54,10 +52,10 @@ const saccoSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true,
     required: true,
-
+    index: { unique: true }
   },
+
   telephone_number: {
     type: String,
     required: true,
@@ -73,7 +71,7 @@ const saccoSchema = new mongoose.Schema({
   website: {
     type: String,
     validate: {
-      validator: link => link.indexOf('https://') === 0,
+      validator: link => link.indexOf('www') === 0,
       message: 'Webpage URL must start with https://',
     }
   },
@@ -81,8 +79,11 @@ const saccoSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
-  status: 'string',
-  username: { type: String, required: true, index: { unique: true } },
+  status: {
+    type: String,
+    default: 'Active'
+  },
+  // username: { type: String, required: true, index: { unique: true } },
   password: { type: String, required: true }
   // ....
 
