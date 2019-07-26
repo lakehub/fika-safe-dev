@@ -37,17 +37,12 @@ export default class TableWhite extends React.Component {
     filteredData: []
   };
 
-  handleInputChange = event => {
-    this.setState(
-      {
-        query: event.target.value
-      },
-      () => {
-        this.filterArray();
-      }
-    );
-  };
-
+  handleInputChange = (e) => {
+    this.setState({
+        query: e.target.value
+    }, this.filterArray)
+}
+  
   getData = () => {
     fetch(`http://localhost:4000/saccos`)
       .then(response => response.json())
@@ -106,16 +101,15 @@ export default class TableWhite extends React.Component {
           <form className="form-inline mt-4 mb-4">
             <MDBIcon icon="search" />
             <input
-              ref={input => (this.search = input)}
-              onChange={this.handleSearchInputChange}
+              // ref={input => (this.search = input)}
+              onChange={this.handleInputChange}
               className="form-control form-control-sm ml-3 w-75"
               type="text"
               id="filter"
               placeholder="Search"
               aria-label="Search"
               name="query"
-              value={this.state.query}
-              onChange={this.handleInputChange}
+              // value={this.state.query}
             />
           </form>
           <div>

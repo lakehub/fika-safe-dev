@@ -85,7 +85,7 @@ const saccoSchema = new mongoose.Schema(
 );
 
 // add text index 
-saccoSchema.index({'$**': text});
+// saccoSchema.index({'$**': text});
 
 
 // RIDER SCHEMA
