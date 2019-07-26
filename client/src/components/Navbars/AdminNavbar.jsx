@@ -55,7 +55,7 @@ class AdminNavbar extends React.Component {
                       <i className="fas fa-search" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Search" type="text" />
+                  <Input placeholder="Search" type="text" value="search" />
                 </InputGroup>
               </FormGroup>
             </Form>
