@@ -1,14 +1,14 @@
-
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 // reactstrap components
-import { Container } from "reactstrap";
+import { Container } from 'reactstrap';
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
-import AdminFooter from "components/Footers/AdminFooter.jsx";
-import Sidebar from "components/Sidebar/Sidebar.jsx";
+import AdminNavbar from 'components/Navbars/AdminNavbar.jsx';
+import AdminFooter from 'components/Footers/AdminFooter.jsx';
+import Sidebar from 'components/Sidebar/Sidebar.jsx';
+import withAuth from 'withAuth.js';
 
-import routes from "routes.js";
+import routes from 'routes.js';
 
 class Admin extends React.Component {
   componentDidUpdate(e) {
@@ -18,11 +18,11 @@ class Admin extends React.Component {
   }
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === '/admin') {
         return (
           <Route
             path={prop.layout + prop.path}
-            component={prop.component}
+            component={withAuth(prop.component)}
             key={key}
           />
         );
@@ -41,7 +41,7 @@ class Admin extends React.Component {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return 'Brand';
   };
   render() {
     return (
@@ -50,9 +50,9 @@ class Admin extends React.Component {
           {...this.props}
           routes={routes}
           logo={{
-            innerLink: "/admin/index",
-            imgSrc: require("assets/img/brand/argon-react.png"),
-            imgAlt: "..."
+            innerLink: '/admin/index',
+            imgSrc: require('assets/img/brand/argon-react.png'),
+            imgAlt: '...',
           }}
         />
         <div className="main-content" ref="mainContent">

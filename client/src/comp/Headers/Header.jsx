@@ -21,33 +21,7 @@ import React from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
 class Header extends React.Component {
-
   render() {
-    //some basic javascript code
-    // the data props is an array of objects
-    const {data}= this.props;
-    
-    const activeArr = [];
-    const deactivatedArr=[];
-// active saccos
-  data.map(sacco=>{
-  if(sacco.status==='Active'){
-    activeArr.push(sacco);
-  }
-    });
-let activeSaccos = activeArr.length;
-
-// Deactivated saccos
-data.map(sacco=>{
-  if(sacco.status==='Deactivated'){
-    deactivatedArr.push(sacco);
-  }
-})
-let deactivatedSaccos=deactivatedArr.length;
-
-// registered saccos
-const registeredSaccos = data.length;
-
     return (
       <>
         <div className="header bg-gradient-success pb-8 pt-5 pt-md-8">
@@ -67,7 +41,7 @@ const registeredSaccos = data.length;
                             Registerd Saccos
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {registeredSaccos}
+                            783
                           </span>
                         </div>
 
@@ -108,7 +82,7 @@ const registeredSaccos = data.length;
                           >
                             Active Saccos
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">{activeSaccos}</span>
+                          <span className="h2 font-weight-bold mb-0">761</span>
                         </div>
                         
                       </Row>
@@ -128,7 +102,7 @@ const registeredSaccos = data.length;
                             Deactivated Saccos
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {deactivatedSaccos}
+                            22
                           </span>
                         </div>
                        

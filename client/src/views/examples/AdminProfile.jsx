@@ -1,22 +1,4 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React from 'react';
 
 // reactstrap components
 import {
@@ -30,15 +12,15 @@ import {
   Form,
   Input,
   Row,
-  Col
-} from "reactstrap";
+  Col,
+} from 'reactstrap';
 
 class AdminProfile extends React.Component {
   render() {
     return (
       <>
-        <div style={{marginTop:"50px"}} className="content">
-          <Row> 
+        <div style={{ marginTop: '50px' }} className="content">
+          <Row>
             <Col md="8">
               <Card className="card-user">
                 <CardHeader>
@@ -47,28 +29,19 @@ class AdminProfile extends React.Component {
                 <CardBody>
                   <Form>
                     <Row>
-                      <Col className="pr-1" md="5">
-
-                      </Col>
-
+                      <Col className="pr-1" md="5" />
                     </Row>
                     <Row>
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>First Name</label>
-                          <Input
-                            placeholder="First Name"
-                            type="text"
-                          />
+                          <Input placeholder="First Name" type="text" />
                         </FormGroup>
                       </Col>
                       <Col className="pl-1" md="6">
                         <FormGroup>
                           <label>Last Name</label>
-                          <Input
-                            placeholder="Last Name"
-                            type="text"
-                          />
+                          <Input placeholder="Last Name" type="text" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -76,10 +49,7 @@ class AdminProfile extends React.Component {
                       <Col md="12">
                         <FormGroup>
                           <label>Email ddress</label>
-                          <Input
-                            placeholder="email"
-                            type="email"
-                          />
+                          <Input placeholder="email" type="email" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -87,17 +57,13 @@ class AdminProfile extends React.Component {
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>Password</label>
-                          <Input
-                            type="password"
-                          />
+                          <Input type="password" />
                         </FormGroup>
                       </Col>
                       <Col className="pl-1" md="6">
                         <FormGroup>
                           <label>Confirm password</label>
-                          <Input
-                            type="password"
-                          />
+                          <Input type="password" />
                         </FormGroup>
                       </Col>
                     </Row>

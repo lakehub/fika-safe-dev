@@ -1,142 +1,138 @@
-import React from 'react';
-import { MDBCol, MDBIcon } from 'mdbreact';
-import PropTypes from 'prop-types';
-import {
-  Badge,
-  Button,
-  Card,
-  CardHeader,
-  CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
-  Table,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  Container,
-  Row,
-  UncontrolledTooltip,
-} from 'reactstrap';
-// core components
-import Header from 'components/Headers/Header.jsx';
-import { Link } from 'react-router-dom';
-import AdminRow from 'components/AdminRow.jsx';
+import React, { Component } from "react";
 
-export default class TableWhite extends React.Component {
+import { Table } from "reactstrap";
+import AdminRow from "components/AdminRow.jsx";
+
+export default class AdminTable extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      query: '',
+      data: [],
+      sortType: "asc"
+    };
+    this.compareBy.bind(this);
+    this.sortBy.bind(this);
+  }
+  componentWillMount() {
+    this.setState({
+      data: this.props.data
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.setState({
+        data: nextProps.data
+      });
+    }
+  }
+  // compare methods
+  compareBy(key) {
+    return function(a, b) {
+      if (a[key] < b[key]) return -1;
+      if (a[key] > b[key]) return 1;
+      return 0;
+    };
+  }
+  compareBy2(key) {
+    return function(a, b) {
+      if (a[key] < b[key]) return 1;
+      if (a[key] > b[key]) return -1;
+      return 0;
     };
   }
 
+  //  sorting methods
+  sortBy(key) {
+    let arrayCopy = [...this.state.data];
+    arrayCopy.sort(this.compareBy(key));
+    this.setState({ data: arrayCopy });
+  }
+
+  sortBy2(key) {
+    let arrayCopy = [...this.state.data];
+    arrayCopy.sort(this.compareBy2(key));
+    this.setState({ data: arrayCopy });
+  }
+
   render() {
-    const { data, sortQuery, handleSortChange } = this.props;
-    console.log(data);
-    const Row = data.map((value, index) => {
-      return <AdminRow key={value._id} sacco={value} />;
-    });
+    // const revsort = ()
+    // console.log(this.state.data);
+    const rows = this.state.data.map(rowData => (
+      <AdminRow key={rowData._id} data={rowData} />
+    ));
     return (
-      <div>
-        <Link to="/admin/new">
-          <Button style={{ margin: '40px', float: 'right' }} color="success">
-            New Sacco
-          </Button>
-        </Link>
-        <br />
-        <UncontrolledDropdown style={{ marginTop: '20px' }} group>
-          <DropdownToggle caret color="info" data-toggle="dropdown">
-            Sort By
-          </DropdownToggle>
-          <DropdownMenu value={sortQuery} onClick={handleSortChange}>
-            <DropdownItem value="name">Sacco Name</DropdownItem>
-            <DropdownItem value="created">Date</DropdownItem>
-            <DropdownItem value="address">Location</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-        {/* search button */}
-        <MDBCol style={{ float: 'right' }} md="4">
-          <form className="form-inline mt-4 mb-4">
-            <MDBIcon icon="search" />
-            <input
-              ref={input => (this.search = input)}
-              onChange={this.handleSearchInputChange}
-              className="form-control form-control-sm ml-3 w-75"
-              type="text"
-              placeholder="Search for..."
-              aria-label="Search"
-            />
-          </form>
-        </MDBCol>
+      <Table className="align-items-center table-flush" responsive>
+        <thead className="thead-light">
+          <tr>
+            <th scope="col">
+              <i
+                className="ni ni-bold-up"
+                onClick={() => this.sortBy("name")}
+              />{" "}
+              <br />
+              <i
+                className="ni ni-bold-down"
+                onClick={() => this.sortBy2("name")}
+              />
+              Sacco Name
+            </th>
+            <th scope="col">
+              <i
+                className="ni ni-bold-up"
+                onClick={() => this.sortBy("created")}
+              />{" "}
+              <br />
+              <i
+                className="ni ni-bold-down"
+                onClick={() => this.sortBy2("created")}
+              />
+              Registered Date
+            </th>
 
-        <Table className="align-items-center table-flush" responsive>
-          <thead className="thead-light">
-            <tr>
-              <th scope="col">Sacco Name</th>
-              <th scope="col">Registered Date</th>
-              <th scope="col">Status</th>
-              <th scope="col">Contacts</th>
-              <th scope="col">Location</th>
-              <th scope="col" />
-            </tr>
-          </thead>
+            <th scope="col">
+              <i
+                className="ni ni-bold-up"
+                onClick={() => this.sortBy("status")}
+              />{" "}
+              <br />
+              <i
+                className="ni ni-bold-down"
+                onClick={() => this.sortBy2("status")}
+              />
+              Status
+            </th>
+            <th scope="col">
+              <i
+                className="ni ni-bold-up"
+                onClick={() => this.sortBy("telephone_number")}
+              />{" "}
+              <br />
+              Contacts
+              <i
+                className="ni ni-bold-down"
+                onClick={() => this.sortBy2("telephone_number")}
+              />
+            </th>
+            <th scope="col">
+              <i
+                className="ni ni-bold-up"
+                onClick={() => this.sortBy("address")}
+              />{" "}
+              <br />
+              <i
+                className="ni ni-bold-down"
+                onClick={() => this.sortBy2("address")}
+              />
+              Address
+            </th>
 
-          <tbody>{Row}</tbody>
-        </Table>
-        <CardFooter className="py-4">
-          <nav aria-label="...">
-            <Pagination
-              className="pagination justify-content-end mb-0"
-              listClassName="justify-content-end mb-0"
-            >
-              <PaginationItem className="disabled">
-                <PaginationLink
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                  tabIndex="-1"
-                >
-                  <i className="fas fa-angle-left" />
-                  <span className="sr-only">Previous</span>
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem className="active">
-                <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                  2 <span className="sr-only">(current)</span>
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                  3
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#pablo" onClick={e => e.preventDefault()}>
-                  <i className="fas fa-angle-right" />
-                  <span className="sr-only">Next</span>
-                </PaginationLink>
-              </PaginationItem>
-            </Pagination>
-          </nav>
-        </CardFooter>
-      </div>
+            <th />
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
     );
   }
 }
-
-TableWhite.propTypes = {
-  data: PropTypes.array.isRequired,
-};

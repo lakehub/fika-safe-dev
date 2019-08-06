@@ -1,7 +1,22 @@
+/*!
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { withRouter } from "react-router";
+=========================================================
+* Argon Dashboard React - v1.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import React from "react";
+import { Link } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -17,18 +32,10 @@ import {
   Navbar,
   Nav,
   Container,
-  Media,
-} from 'reactstrap';
-
-import AuthHelperMethods from 'AuthHelperMethods.js';
+  Media
+} from "reactstrap";
 
 class AdminNavbar extends React.Component {
-  Auth = new AuthHelperMethods();
-  /* Add the following into _handleLogout*/
-  _handleLogout = () => {
-    this.Auth.logout();
-    this.props.history.replace('/login');
-  };
   render() {
     return (
       <>
@@ -57,8 +64,10 @@ class AdminNavbar extends React.Component {
                 <DropdownToggle className="pr-0" nav>
                   <Media className="align-items-center">
                     <span className="avatar avatar-sm rounded-circle">
-                      <i className=" ni ni-single-02" />
+                    <i className=" ni ni-single-02" />
+                            
                     </span>
+
                   </Media>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
@@ -71,11 +80,11 @@ class AdminNavbar extends React.Component {
                     <span>profile</span>
                   </DropdownItem>
                   {/* </Link> */}
-                  <DropdownItem to="/admin/logs" tag={Link}>
+                  <DropdownItem to="/admin/user-profile" tag={Link}>
                     <i className="ni ni-archive-2" />
                     <span>Logs</span>
                   </DropdownItem>
-                  <DropdownItem onClick={this._handleLogout}>
+                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
@@ -88,4 +97,5 @@ class AdminNavbar extends React.Component {
     );
   }
 }
-export default withRouter(AdminNavbar);
+
+export default AdminNavbar;

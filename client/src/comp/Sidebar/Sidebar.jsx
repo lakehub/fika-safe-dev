@@ -1,8 +1,7 @@
-
-import React from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import React from 'react';
+import { NavLink as NavLinkRRD, Link } from 'react-router-dom';
 // nodejs library to set properties for components
-import { PropTypes } from "prop-types";
+import { PropTypes } from 'prop-types';
 
 // reactstrap components
 import {
@@ -32,14 +31,14 @@ import {
   Table,
   Container,
   Row,
-  Col
-} from "reactstrap";
+  Col,
+} from 'reactstrap';
 
 var ps;
 
 class Sidebar extends React.Component {
   state = {
-    collapseOpen: false
+    collapseOpen: false,
   };
   constructor(props) {
     super(props);
@@ -47,18 +46,18 @@ class Sidebar extends React.Component {
   }
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
+    return this.props.location.pathname.indexOf(routeName) > -1 ? 'active' : '';
   }
   // toggles collapse between opened and closed (true/false)
   toggleCollapse = () => {
     this.setState({
-      collapseOpen: !this.state.collapseOpen
+      collapseOpen: !this.state.collapseOpen,
     });
   };
   // closes the collapse
   closeCollapse = () => {
     this.setState({
-      collapseOpen: false
+      collapseOpen: false,
     });
   };
   // creates the links that appear in the left menu / Sidebar
@@ -85,12 +84,12 @@ class Sidebar extends React.Component {
     if (logo && logo.innerLink) {
       navbarBrandProps = {
         to: logo.innerLink,
-        tag: Link
+        tag: Link,
       };
     } else if (logo && logo.outterLink) {
       navbarBrandProps = {
         href: logo.outterLink,
-        target: "_blank"
+        target: '_blank',
       };
     }
     return (
@@ -120,37 +119,32 @@ class Sidebar extends React.Component {
           ) : null}
           {/* User */}
           <Nav className="align-items-center d-md-none">
-          <UncontrolledDropdown nav>
-                <DropdownToggle className="pr-0" nav>
-                  <Media className="align-items-center">
-                    <span className="avatar avatar-sm rounded-circle">
+            <UncontrolledDropdown nav>
+              <DropdownToggle className="pr-0" nav>
+                <Media className="align-items-center">
+                  <span className="avatar avatar-sm rounded-circle">
                     <i className=" ni ni-single-02" />
-                            
-                    </span>
-
-                  </Media>
-                </DropdownToggle>
-                <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem className="noti-title" header tag="div">
-                    <h6 className="text-overflow m-0">Welcome!</h6>
-                  </DropdownItem>
-                  <Link to="/admin/admin-profile">
-                  <DropdownItem>
-                    <i className="ni ni-single-02" />
-                    <span>profile</span>
-                  </DropdownItem>
-                  </Link>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-archive-2" />
-                    <span>Logs</span>
-                  </DropdownItem>
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                    <i className="ni ni-user-run" />
-                    <span>Logout</span>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            
+                  </span>
+                </Media>
+              </DropdownToggle>
+              <DropdownMenu className="dropdown-menu-arrow" right>
+                <DropdownItem className="noti-title" header tag="div">
+                  <h6 className="text-overflow m-0">Welcome!</h6>
+                </DropdownItem>
+                <DropdownItem to="/admin/admin-profile" tag={Link}>
+                  <i className="ni ni-single-02" />
+                  <span>profile</span>
+                </DropdownItem>
+                <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <i className="ni ni-archive-2" />
+                  <span>Logs</span>
+                </DropdownItem>
+                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <i className="ni ni-user-run" />
+                  <span>Logout</span>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>
@@ -199,35 +193,9 @@ class Sidebar extends React.Component {
               </InputGroup>
             </Form>
             {/* Navigation */}
-            <Nav navbar>
-
-            <NavItem >
-          <NavLink
-            to="/admin/home"
-            tag={NavLinkRRD}
-            onClick={this.closeCollapse}
-            activeClassName="active"
-          >
-            <i className="fa fa-tv" />
-            Dashboard
-          </NavLink>
-        </NavItem>
-        <NavItem >
-          <NavLink
-            to="/admin/logs"
-            tag={NavLinkRRD}
-            onClick={this.closeCollapse}
-            activeClassName="active"
-          >
-            <i className="fa fa-archive" />
-            Logs
-          </NavLink>
-        </NavItem>
-            
-            </Nav>
+            <Nav navbar>{this.createLinks(routes)}</Nav>
             {/* Divider */}
             <hr className="my-3" />
-
           </Collapse>
         </Container>
       </Navbar>
@@ -236,7 +204,7 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.defaultProps = {
-  routes: [{}]
+  routes: [{}],
 };
 
 Sidebar.propTypes = {
@@ -252,8 +220,8 @@ Sidebar.propTypes = {
     // the image src of the logo
     imgSrc: PropTypes.string.isRequired,
     // the alt for the img
-    imgAlt: PropTypes.string.isRequired
-  })
+    imgAlt: PropTypes.string.isRequired,
+  }),
 };
 
 export default Sidebar;

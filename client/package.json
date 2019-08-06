@@ -32,7 +32,8 @@
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "compile-sass": "node-sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.css",
     "minify-sass": "node-sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.css --source-map true"
+    "map-sass": "node-sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.css --source-map true",
+    "precommit": "pretty-quick --staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,6 +48,7 @@
     "aws-amplify": "^1.1.5",
     "chart.js": "2.7.3",
     "classnames": "2.2.6",
+    "jwt-decode": "2.2.0",
     "mdbreact": "^4.18.0",
     "moment": "2.24.0",
     "node-sass": "4.11.0",
@@ -55,18 +57,22 @@
     "react-bootstrap": "^0.32.1",
     "react-chartjs-2": "2.7.4",
     "react-copy-to-clipboard": "5.0.1",
-    "react-datepicker": "^2.8.0",
+    "react-datepicker": "2.8.0",
     "react-datetime": "2.16.3",
     "react-dom": "^16.8.4",
     "react-google-maps": "9.4.5",
     "react-router-dom": "4.3.1",
-    "react-scripts": "2.1.8",
-    "reactstrap": "7.1.0"
+    "react-scripts": "3.0.1",
+    "reactstrap": "7.1.0",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@types/googlemaps": "3.30.18",
     "@types/markerclustererplus": "2.1.33",
     "@types/react": "16.8.7",
+    "eslint-config-prettier": "6.0.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "prettier": "1.18.2",
     "typescript": "3.3.3333"
   }
 }
