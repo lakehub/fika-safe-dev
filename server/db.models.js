@@ -133,6 +133,10 @@ const riderSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    bikeOwnerTelNumber:{
+      type: String,
+      required: true
+    },
     address: {
       type: String,
       required: true,

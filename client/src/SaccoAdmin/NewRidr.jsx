@@ -11,11 +11,7 @@ import {
   Input,
   Container,
   Row,
-  Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
+  Col
 } from "reactstrap";
 // core components
 
@@ -63,11 +59,9 @@ class NewSacco extends React.Component {
         address: "",
         website: "",
         password: "",
-        confirmpassword: "",
-        modal: false
+        confirmpassword: ""
       }
     };
-    this.toggle = this.toggle.bind(this);
   }
 
   // validation
@@ -172,11 +166,6 @@ class NewSacco extends React.Component {
         alert("unable create the sacco");
       });
   };
-  toggle() {
-    this.setState(prevState => ({
-      modal: !prevState.modal
-    }));
-  }
 
   render() {
     const {
@@ -208,6 +197,54 @@ class NewSacco extends React.Component {
                       User information
                     </h6>
                     <div className="pl-lg-4">
+                    <Row>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-username"
+                            >
+                              First Name
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              name="name"
+                              onChange={this.handleChange}
+                              value={name}
+                              placeholder="First Name"
+                              type="text"
+                            />
+                            {formErrors.saccoName.length > 0 && (
+                              <span style={{ color: "red", fontSize: 15 }}>
+                                {formErrors.saccoName}
+                              </span>
+                            )}
+                          </FormGroup>
+                        </Col>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-username"
+                            >
+                              Last Name
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              name="name"
+                              onChange={this.handleChange}
+                              value={name}
+                              placeholder="Last Name"
+                              type="text"
+                            />
+                            {formErrors.saccoName.length > 0 && (
+                              <span style={{ color: "red", fontSize: 15 }}>
+                                {formErrors.saccoName}
+                              </span>
+                            )}
+                          </FormGroup>
+                        </Col>
+                      </Row>
                       <Row>
                         <Col lg="6">
                           <FormGroup>
@@ -538,16 +575,6 @@ class NewSacco extends React.Component {
                       >
                         Save
                       </Button>
-                      <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                        <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-                        <ModalBody>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-                          <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                        </ModalFooter>
-                      </Modal>
                     </div>
                   </Form>
                 </CardBody>

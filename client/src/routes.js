@@ -1,4 +1,3 @@
-
 import Index from "views/Index.jsx";
 import Profile from "views/examples/Profile.jsx";
 import Login from "views/examples/Login.jsx";
@@ -30,7 +29,6 @@ var routes = [
     component: Logs,
     layout: "/admin"
   },
-<<<<<<< HEAD
   {
     path: "/login",
     name: "Login",
@@ -53,26 +51,6 @@ var routes = [
     path: "/admin-profile",
     component: AdminProfile,
     layout: "/admin"
-  },
-=======
-  // {
-  //   // path: "/login",
-  //   // name: "Login",
-  //   // icon: "ni ni-key-25 text-info",
-  //   // component: Login,
-  //   // layout: "/auth"
-  // },
-  // {
-  //   path: "/new",
-  //   component: NewSacco,
-  //   layout: "/admin"
-  // },
-  // {
-  //   path: "/admin-profile",
-  //   component: AdminProfile,
-  //   layout: "/admin"
-  // },
->>>>>>> 44e5ac3a4bc037806bafbb75e37faf2e5992fe0d
-
+  }
 ];
 export default routes;
