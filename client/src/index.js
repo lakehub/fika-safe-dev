@@ -36,7 +36,7 @@ ReactDOM.render(
       <Route path="/sacco/new-rider" component={NewRider} />
       <Route path="/sacco/my-profile" component={SaccProfile} />
       <Route path="/sacco/rider-profile" component={RiderProfile} />
-      <Route path="/reset_password" component={ResetPassword} />
+      <Route path="/forgot" component={ResetPassword} />
       <Redirect from="/" to="/admin/home" />
     </Switch>
   </BrowserRouter>,
