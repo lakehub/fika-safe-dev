@@ -12,7 +12,7 @@ import {
   Form,
   Input,
   Row,
-  Col,
+  Col
 } from 'reactstrap';
 
 class AdminProfile extends React.Component {

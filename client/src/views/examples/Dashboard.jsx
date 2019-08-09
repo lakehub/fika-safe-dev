@@ -58,7 +58,7 @@ class Dashboard extends Component {
         <div className="main-content" ref="mainContent">
           <Navbar />
           <Header data={this.state.data} />
-          <AdminHome                                                                                                                                                                                                                    />
+          <AdminHome />
           <Container fluid>
             <Footer />
           </Container>

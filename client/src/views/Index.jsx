@@ -1,9 +1,9 @@
-import queryString from 'query-string';
-import React from 'react';
+import queryString from "query-string";
+import React from "react";
 // node.js library that concatenates classes (strings)
 // javascipt plugin for creating charts
 // react plugin used to create charts
-import AdminTable from '../components/AdminTable.jsx';
+import AdminTable from "../components/AdminTable.jsx";
 // reactstrap components
 import {
   Button,
@@ -17,12 +17,12 @@ import {
   Table,
   Container,
   Row,
-  Col,
-} from 'reactstrap';
+  Col
+} from "reactstrap";
 
 // core components
 
-import Header from 'components/Headers/Header.jsx';
+import Header from "components/Headers/Header.jsx";
 
 class Index extends React.Component {
   constructor(props) {
@@ -33,12 +33,12 @@ class Index extends React.Component {
       // data loaded from the array
       data: [],
       // sorting data
-      sortBy: 'name',
+      sortBy: "name",
       // filter data
-      status: '',
-      dateLte: '2019-10-10', // oldDate
-      dateGte: '2019-10-24', // newDate
-      changed: false,
+      status: "",
+      dateLte: "2019-10-10", // oldDate
+      dateGte: "2019-10-24", // newDate
+      changed: false
     };
 
     this.loadData = this.loadData.bind(this);
@@ -69,14 +69,14 @@ class Index extends React.Component {
   // sorting handler function
   handleSortChange = event => {
     this.setState({
-      sortBy: event.target.value,
+      sortBy: event.target.value
     });
   };
 
   // deleteSacco
   deleteSacco(id) {
     console.log(id);
-    fetch(`/api/saccos/${id}`, { method: 'DELETE' })
+    fetch(`/api/saccos/${id}`, { method: "DELETE" })
       .then(response => {
         response.json();
         // alert(response.message);
