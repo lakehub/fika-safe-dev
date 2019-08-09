@@ -1,7 +1,6 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
-// reactstrap components
+import React from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
 
 import {
   Button,
@@ -13,37 +12,98 @@ import {
   Input,
   Container,
   Row,
-  Col,
-} from 'reactstrap';
+  Col
+} from "reactstrap";
 // core components
-import UserHeader from 'components/Headers/UserHeader.jsx';
-import AuthHelperMethods from 'AuthHelperMethods.js';
+import UserHeader from "components/Headers/UserHeader.jsx";
 //Our higher order component
-import withAuth from 'withAuth.js';
-import { couldStartTrivia } from 'typescript';
+import withAuth from "withAuth.js";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props)
     this.state = {
+      rider: {},
+      diabled: true,
       red: true,
-      name: 'active',
+      name: "active"
     };
-
-    // onDeactivate:
   }
+  // lifecycle control
+  componentDidMount() {
+    // this.setState({ id: this.props.id });
+    const rider = this.props.rider;
+    this.setState({
+      rider
+    });
+  }
+
+  // handle change
+  handleChange = event => {
+    const target = event.target;
+    const { name, value } = target;
+
+    event.preventDefault();
+    this.setState({
+      rider: {
+        [name]: value
+      }
+    });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.saveData(this.state.rider);
+  };
+
+  // onDeactivate:
   onDeactivate() {
     this.setState({ red: !this.state.red });
     this.setState({ name: !this.state.name });
   }
-  render() {
-    let btn_class = this.state.red ? 'info' : 'danger';
-    let btn_name = this.state.name ? 'Active' : 'Deactivated';
 
+  // load Data for a specific sacc
+  render() {
+    let btn_class = this.state.red ? "info" : "danger";
+    let btn_name = this.state.name ? "Active" : "Deactivated";
+    //const { name,id} = this.props;
+    console.log(this.props.rider);
+    const {
+      riderFname,
+      riderSurName,
+      riderLname,
+      riderTelNumber,
+      riderID,
+      riderResidence,
+      riderPassportPhoto,
+      riderBase,
+      drivingLicense,
+      DLIssueDate,
+      DLExpDate,
+
+      bikeOwnerFname,
+      bikeOwnerLname,
+      bikeOwnerResidence,
+      bikeOwnerID,
+      bikeOwnerTelNumber,
+
+      motorBikeMake,
+      motorBikeBrand,
+      insuranceNumber,
+      insuranceIssueDate,
+      insuranceExpDate,
+      numberPlate,
+
+      created,
+      status,
+      _id,
+      ratings,
+      sacco
+    } = this.props.rider;
+    //console.log(id);
     return (
       <>
-        <UserHeader />
+        <UserHeader name={`${riderFname} ${riderLname}`} />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -54,42 +114,44 @@ class Profile extends React.Component {
                 </Row>
 
                 <CardBody
-                  style={{ background: '#e4f0f7' }}
+                  style={{ background: "#e4f0f7" }}
                   className="pt-0 pt-md-4"
                 >
                   <Row>
                     <div className="col">
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
-                          <span className="heading">78</span>
-                          <span className="description">Registered Riders</span>
+                          <span className="heading">{`${ratings} star`}</span>
+                          <span className="description">Rider's Rating</span>
                         </div>
                       </div>
                     </div>
                   </Row>
                   <div className="text-center">
-                    <h3>Ubuntu Sacco</h3>
-                    <h3 style={{ background: '#cee0eb', borderRadius: '10px' }}>
+                    <h3>{this.state.rider.name}</h3>
+                    <h3 style={{ background: "#cee0eb", borderRadius: "10px" }}>
                       {btn_name}
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      P.O. Box 656, Kisumu
+                      {riderBase}, {riderResidence}
                     </div>
                     <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
-                      Registration Number: NJDFHY747VG
+                      Insurance Number: {insuranceNumber}
                     </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      Email: ubuntusacco@ubuntu.com
+                    <div className="h5 mt-4">
+                      <i className="ni business_briefcase-24 mr-2" />
+                      Number Plate: {numberPlate}
                     </div>
-                    <div>
+                    <div className="h5 mt-4">
                       <i className="ni education_hat mr-2" />
-                      Year Founded: 2018
+                      License Number: {drivingLicense}
                     </div>
                     <hr className="my-4" />
-                    <p>Description Description......</p>
+                    <p>{`Insurance number  expires in ${moment(
+                      insuranceExpDate
+                    ).format("MM-DD-YYYY")}`}</p>
                   </div>
                 </CardBody>
               </Card>
@@ -120,56 +182,156 @@ class Profile extends React.Component {
                 <CardBody>
                   <Form>
                     <h6 className="heading-small text-muted mb-4">
-                      User information
+                      Rider Information
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
-                        <Col lg="6">
+                        <Col lg="4">
                           <FormGroup>
                             <label
                               className="form-control-label"
                               htmlFor="input-username"
                             >
-                              Sacco Name
+                              First Name:
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="sacconame"
+                              value={riderFname}
+                              onChange={this.handleChange}
+                              name="riderFname"
                               placeholder="Sacco Name"
                               type="text"
                             />
                           </FormGroup>
                         </Col>
+                        <Col lg="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-username"
+                            >
+                              Surname:
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              value={riderSurName}
+                              onChange={this.handleChange}
+                              name="riderSurName"
+                              placeholder="Sacco Name"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-username"
+                            >
+                              Last Name:
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              value={riderLname}
+                              onChange={this.handleChange}
+                              name="riderLname"
+                              placeholder="Sacco Name"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+
                         <Col lg="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
                               htmlFor="input-email"
                             >
-                              Email address
+                              Telephone Number:
                             </label>
                             <Input
+                              value={riderTelNumber}
+                              name="riderTelNumber"
+                              onChange={this.handleChange}
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="Enter email"
+                              placeholder="Enter telephone number"
+                              type="email"
+                            />
+                          </FormGroup>
+                        </Col>
+
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-email"
+                            >
+                              Passport/ID Number:
+                            </label>
+                            <Input
+                              value={riderID}
+                              name="riderID"
+                              onChange={this.handleChange}
+                              className="form-control-alternative"
+                              id="input-email"
+                              placeholder="Enter ID number"
                               type="email"
                             />
                           </FormGroup>
                         </Col>
                       </Row>
                       <Row>
-                        <Col lg="6">
+                        <Col lg="4">
                           <FormGroup>
                             <label
                               className="form-control-label"
                               htmlFor="input-first-name"
                             >
-                              Registration Number
+                              Driving License:
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="registration-number"
-                              placeholder="Registration Number"
+                              value={drivingLicense}
+                              name="drivingLicense"
+                              onChange={this.handleChange}
+                              placeholder="Enter License number"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-first-name"
+                            >
+                              Issue Date:
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              value={moment(DLIssueDate).format('MM-DD-YYYY')}
+                              name="DLIssueDate"
+                              onChange={this.handleChange}
+                              placeholder="Issue date"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-first-name"
+                            >
+                              Exp Date:
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              value={moment(DLExpDate).format('MM-DD-YYYY')}
+                              name="DLExpDate"
+                              onChange={this.handleChange}
+                              placeholder="Exp date"
                               type="text"
                             />
                           </FormGroup>
@@ -180,12 +342,32 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
-                              Year Founded
+                              Area of Residence:
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="year-founded"
-                              placeholder="Year founded"
+                              value={riderResidence}
+                              name="riderResidence"
+                              onChange={this.handleChange}
+                              placeholder="Area of Residence"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-last-name"
+                            >
+                              Operating Base:
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              value={riderBase}
+                              name="riderBase"
+                              onChange={this.handleChange}
+                              placeholder="Base"
                               type="text"
                             />
                           </FormGroup>
@@ -195,22 +377,42 @@ class Profile extends React.Component {
                     <hr className="my-4" />
                     {/* Address */}
                     <h6 className="heading-small text-muted mb-4">
-                      Contact information
+                      MotorBike Owner Details
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
-                        <Col md="12">
+                        <Col md="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
                               htmlFor="input-address"
                             >
-                              Address
+                              First Name:
                             </label>
                             <Input
+                              value={bikeOwnerFname}
+                              name="bikeOwnerFname"
+                              onChange={this.handleChange}
                               className="form-control-alternative"
-                              id="input-address"
-                              placeholder="Enter Address"
+                              placeholder="Enter first name"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="6">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-address"
+                            >
+                              Last Name:
+                            </label>
+                            <Input
+                              value={bikeOwnerLname}
+                              name="bikeOwnerLname"
+                              onChange={this.handleChange}
+                              className="form-control-alternative"
+                              placeholder="Enter last name"
                               type="text"
                             />
                           </FormGroup>
@@ -223,11 +425,13 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-city"
                             >
-                              Phone
+                              Phone:
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="phone"
+                              value={bikeOwnerTelNumber}
+                              name="bikeOwnerTelNumber"
+                              onChange={this.handleChange}
                               placeholder="Enter Phone Number"
                               type="text"
                             />
@@ -239,12 +443,14 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Postal Code
+                              Passport/ID:
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="postal-code"
-                              placeholder="Postal code"
+                              value={bikeOwnerID}
+                              name="bikeOwnerID"
+                              onChange={this.handleChange}
+                              placeholder="passport/ID"
                               type="number"
                             />
                           </FormGroup>
@@ -255,45 +461,136 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-country"
                             >
-                              Website link
+                              Area of Residence:
                             </label>
                             <Input
                               className="form-control-alternative"
-                              id="website"
-                              placeholder="website"
+                              value={bikeOwnerResidence}
+                              name="bikeOwnerResidence"
+                              onChange={this.handleChange}
+                              placeholder="Enter area of residence"
                               type="text"
                             />
                           </FormGroup>
                         </Col>
                       </Row>
+                    </div>
+                    <hr className="my-4" />
+
+                    <h6 className="heading-small text-muted mb-4">
+                      MotorBike Details
+                    </h6>
+                    <div className="pl-lg-4">
                       <Row>
-                        <Col lg="6">
+                        <Col md="4">
                           <FormGroup>
                             <label
                               className="form-control-label"
-                              htmlFor="input-first-name"
+                              htmlFor="input-address"
                             >
-                              Create Password
+                              Brand:
                             </label>
                             <Input
+                              value={motorBikeBrand}
+                              name="motorBikeBrand"
+                              onChange={this.handleChange}
                               className="form-control-alternative"
-                              id="password"
-                              type="password"
+                              placeholder="eg Boxer"
+                              type="text"
                             />
                           </FormGroup>
                         </Col>
-                        <Col lg="6">
+                        <Col md="4">
                           <FormGroup>
                             <label
                               className="form-control-label"
-                              htmlFor="input-last-name"
+                              htmlFor="input-address"
                             >
-                              Confirm Password
+                              Make:
                             </label>
                             <Input
+                              value={motorBikeMake}
+                              name="motorBikeMake"
+                              onChange={this.handleChange}
                               className="form-control-alternative"
-                              id="confirm-password"
-                              type="password"
+                              placeholder="eg BM-100"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-address"
+                            >
+                              Number Plate:
+                            </label>
+                            <Input
+                              value={numberPlate}
+                              name="numberPlate"
+                              onChange={this.handleChange}
+                              className="form-control-alternative"
+                              placeholder="Enter plate number"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-address"
+                            >
+                              Insurance Number:
+                            </label>
+                            <Input
+                              value={insuranceNumber}
+                              name="insuranceNumber"
+                              onChange={this.handleChange}
+                              className="form-control-alternative"
+                              placeholder="Enter insurance nunber "
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-address"
+                            >
+                              Issue Date:
+                            </label>
+                            <Input
+                              value={moment(insuranceIssueDate).format(
+                                "MM-DD-YYYY"
+                              )}
+                              name="insuranceIssueDate"
+                              onChange={this.handleChange}
+                              className="form-control-alternative"
+                              placeholder="Issue Date"
+                              type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col md="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-address"
+                            >
+                              Exp Date:
+                            </label>
+                            <Input
+                              value={moment(insuranceExpDate).format(
+                                "MM-DD-YYYY"
+                              )}
+                              name="insuranceExpDate"
+                              onChange={this.handleChange}
+                              className="form-control-alternative"
+                              placeholder="Exp Date "
+                              type="text"
                             />
                           </FormGroup>
                         </Col>
@@ -301,21 +598,11 @@ class Profile extends React.Component {
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                    <h6 className="heading-small text-muted mb-4">About</h6>
                     <div className="pl-lg-4">
-                      <FormGroup>
-                        <label>Description</label>
-                        <Input
-                          className="form-control-alternative"
-                          placeholder="A few words about you..."
-                          rows="4"
-                          type="textarea"
-                        />
-                      </FormGroup>
                       <Button
                         color="info"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
+                        diabled="true "
+                        onClick={this.handleSubmit}
                       >
                         Save
                       </Button>

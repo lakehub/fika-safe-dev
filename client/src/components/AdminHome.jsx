@@ -18,7 +18,6 @@ import {
   PaginationLink
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { copyFileSync } from "fs";
 
 class TableWhite extends React.Component {
   constructor() {

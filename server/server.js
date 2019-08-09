@@ -104,9 +104,9 @@ app.get("/", (req, res) => {
   res.json("this is our first server page");
 });
 
-app.post("/api/riders", (req, res) => {
-  if (req.body.insurance.issue_date)
-    req.body.insurance.issue_date = new Date(req.body.insurance.issue_date);
+app.post('/api/riders', (req, res) => {
+  // if (req.body.insurance.issue_date)
+  //   req.body.insuranceIssueDate = new Date(req.body.insuranceIssueDate);
   const newRider = new Rider(req.body);
   newRider
     .save()
@@ -134,7 +134,7 @@ app.get("/api/riders", (req, res) => {
 });
 
 /* GET SINGLE RIDER BY ID */
-app.get("api/riders/:id", (req, res) => {
+app.get('/api/riders/:id', (req, res) => {
   let ridersId;
   try {
     ridersId = new ObjectId(req.params.id);
@@ -154,7 +154,7 @@ app.get("api/riders/:id", (req, res) => {
 });
 
 /* SAVE RIDERS */
-app.post("api/riders", (req, res) => {
+app.post('/api/riders', (req, res) => {
   const newRider = req.body;
 
   Rider.create(newRider)
@@ -170,7 +170,7 @@ app.post("api/riders", (req, res) => {
 });
 
 /* UPDATE PRODUCT */
-app.put("api/riders/:id", (req, res) => {
+app.put('/api/riders/:id', (req, res) => {
   let ridersId;
   try {
     ridersId = new ObjectId(req.params.id);

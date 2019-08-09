@@ -1,112 +1,183 @@
-import React from 'react';
-import Picker from './DatePicker.jsx'
-import { MDBCol, MDBIcon } from 'mdbreact';
-import AdminTable from './RiderTable.jsx'
+import queryString from "querystring";
+import React from "react";
+import Picker from "./DatePicker.jsx";
+import { MDBCol, MDBIcon } from "mdbreact";
+import RiderTable from "./RiderTable.jsx";
+import { withRouter } from "react-router";
 
 import {
-  Badge,
   Button,
-  Card,
-  CardHeader,
   CardFooter,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Media,
   Pagination,
   PaginationItem,
-  PaginationLink,
-  Progress,
-  Table,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  Container,
-  Row,
-  UncontrolledTooltip,
-} from 'reactstrap';
-// core components
-import Header from 'components/Headers/Header.jsx';
-import { Link } from "react-router-dom"
-import AdminRow from 'components/AdminRow.jsx';
+  PaginationLink
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
-export default class TableWhite extends React.Component {
-  state = {
-    sort: { column: "col", order: "desc" },
-    columns: {
-      col: { name: "Satatus", filterText: "", defaultSortOrder: "desc" },
+class TableWhite extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      data: [],
+      data1: [],
+      sortBy: "name",
+      searchQuery: "",
+      space: " ",
+      query: { status: "" }
+    };
+  }
+  // loading the data
 
-    },
-    query: "",
-    data: [],
-    filteredData: []
+  componentDidMount() {
+    this.loadData();
   }
 
-  handleInputChange = event => {
-    const query = event.target.value;
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.location !== prevProps.location) {
+  //     this.loadData();
+  //   }
+  // }
 
-    this.setState(prevState => {
-      const filteredData = prevState.data.filter(element => {
-        return element.name.toLowerCase().includes(query.toLowerCase());
-      });
+  setFilter(query) {
+    // very important to stringify the data
+    const { history, location } = this.props;
+    const dataQuery = queryString.stringify(query);
+    console.log(dataQuery);
+    history.push(`${location.pathname}?${dataQuery}`);
+  }
 
-      return {
-        query,
-        filteredData
-      };
+  // sorting handler function
+  handleSortChange(event) {
+    this.setState({
+      sortBy: event.target.value
     });
+  }
+  handleSearchChange = event => {
+    event.preventDefault();
+    this.setState({
+      searchQuery: event.target.value
+    });
+    // this.loadData();
+    this.search(event.target.value);
+    // console.log(this.state.searchQuery);
   };
 
-  getData = () => {
-    fetch(`/api/saccos`)
-      .then(res => res.json())
-      .then(data => {
-        const { query } = this.state;
-        const filteredData = data.filter(element => {
-          return element.name.toLowerCase().includes(query.toLowerCase());
-        });
+  // handles tchages in the status inputs
+  onChangeStatus = ({ target: { value } }) => {
+    this.setState({
+      query: { status: value }
+    });
+    console.log(this.state.query.status);
+  };
 
-          this.setState({
-          data,
-          filteredData
+  // get data from the db and loads it to state
+  loadData() {
+    // axios is so messsy
+    fetch(`/api/riders`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          data: data,
+          data1: data
         });
       })
-      .catch(err=>console.log(err));
-  };
-
-  componentWillMount() {
-    this.getData();
+      .catch(err => {
+        console.log(err);
+      });
   }
 
+  // handle any change in the search
+  search = searchQuery => {
+    // Variable to hold the original version of the list
+    let currentList = [];
+    // Variable to hold the filtered list before putting into state
+    let newList = [];
+
+    // If the search bar isn't empty
+    if (searchQuery.length > 0) {
+      // this.loadData();
+      currentList = this.state.data1;
+      // Assign the original list to currentList
+      // currentList = this.state.data;
+      const filter = searchQuery.trim();
+
+      // Use .filter() to determine which items should be displayed
+      // based on the search terms
+      for (var i = 0; i < currentList.length; i++) {
+        for (let keys in currentList[i]) {
+          if (
+            currentList[i][keys].toString().indexOf(filter) !== -1 &&
+            !newList.includes(currentList[i])
+          ) {
+            newList.push(currentList[i]);
+          }
+        }
+      }
+
+      // Set the filtered state based on what our rules added to newList
+      if (newList !== []) {
+        this.setState({
+          data: newList
+        });
+      }
+    } else if (searchQuery.length < 1 && searchQuery === "") {
+      this.setState({
+        data: currentList
+      });
+    } else {
+      this.setState({
+        data: currentList
+      });
+    }
+    // console.log(newList);
+  };
+
   render() {
-
-
+    console.log(this.state.searchQuery);
+    const { data } = this.state;
+    const { status } = this.state.query;
+    console.log(this.props);
     return (
       <div>
-        <Link to="/sacco/new-rider">
-          <Button style={{ margin: "40px", float: "right" }} color="success">New Sacco</Button>
+        <Link to="/admin/new-sacco">
+          <Button style={{ margin: "40px", float: "right" }} color="success">
+            New Sacco
+          </Button>
         </Link>
         <br />
+        <UncontrolledDropdown style={{ marginTop: "20px" }} group>
+          <DropdownToggle caret color="info" data-toggle="dropdown">
+            Status
+          </DropdownToggle>
+          <DropdownMenu value={status} onChange={this.onChangeStatus}>
+            <DropdownItem value="Active">Active</DropdownItem>
+            <DropdownItem value="Deactivated">Deactivated</DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
 
-        <MDBCol style={{ float: 'right' }} md="4">
+        <MDBCol style={{ float: "right" }} md="4">
           <form className="form-inline mt-4 mb-4">
             <MDBIcon icon="search" />
             <input
               className="form-control form-control-sm ml-3 w-75"
               type="text"
+              name="searchQuery"
+              onChange={this.handleSearchChange}
+              value={`${this.state.space}${this.state.searchQuery}`}
               placeholder="Search"
               aria-label="Search"
-              value={this.state.query}
-              onChange={this.handleInputChange}
             />
           </form>
-          <div>{this.state.filteredData.map(i => <p>{i.name}</p>)}</div>
         </MDBCol>
-        <div style={{ marginLeft: "130px", marginTop: "-10px" }}>
-          <Picker /></div>
-        <UncontrolledDropdown style={{ marginTop: "-70px" }} group>
+        <div style={{ marginLeft: "130px", marginTop: "-43px" }}>
+          <Picker />
+        </div>
+        {/* <UncontrolledDropdown style={{ marginTop: "-120px" }} group>
           <DropdownToggle caret color="info" data-toggle="dropdown">
             Status
           </DropdownToggle>
@@ -114,8 +185,8 @@ export default class TableWhite extends React.Component {
             <DropdownItem>Active</DropdownItem>
             <DropdownItem>Inactive</DropdownItem>
           </DropdownMenu>
-        </UncontrolledDropdown>
-        <AdminTable />
+        </UncontrolledDropdown> */}
+        <RiderTable data={data} />
         <CardFooter className="py-4">
           <nav aria-label="...">
             <Pagination
@@ -160,5 +231,4 @@ export default class TableWhite extends React.Component {
     );
   }
 }
-
-
+export default withRouter(TableWhite);

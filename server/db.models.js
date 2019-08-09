@@ -32,20 +32,6 @@ const saccoSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    chairLeader: {
-      fname: {
-        type: String,
-        required: true
-      },
-      lname: {
-        type: String,
-        required: true
-      },
-      ID: {
-        type: Number,
-        requred: true
-      }
-    },
     uniqueSaccoCode: {
       type: String,
       required: true
@@ -87,6 +73,18 @@ const saccoSchema = new mongoose.Schema(
       type: Date,
       default: new Date()
     },
+    saccoLeaderFname: {
+      type: String,
+      requred: true,
+    },
+    saccoLeaderLname: {
+      type: String,
+      requred: true,
+    },
+    saccoLeaderPhoneNumber: {
+      type: String,
+      requred: true,
+    },
     status: {
       type: String,
       default: "Active"
@@ -103,79 +101,99 @@ const saccoSchema = new mongoose.Schema(
 // RIDER SCHEMA
 const riderSchema = new mongoose.Schema(
   {
-    first_name: {
+    riderFname: {
       type: String,
       required: true
     },
-    sur_name: {
+    riderSurName: {
       type: String,
       required: true
     },
-    last_name: {
+    riderLname: {
       type: String,
       required: true
     },
-    telephone_number: {
+    riderTelNumber: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    drivingLicense:{
+      type: String,
+      required: true,
+      unique:true
+    },
+   
+    DLIssueDate:{
+      type: Date,
+      required: true
+    },
+    DLExpDate:{
+      type:Date,
+      required: true
+    },
+    riderPassportPhoto: {
+      type: Buffer,
+      required: false,
+    },
+    riderID: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    riderBase:{
+      type: String,
+      required: true
+    },
+    riderResidence:{
+      type: String,
+      required: true
+    },
+    bikeOwnerFname: {
+      type: String,
+      required: true
+    },
+    bikeOwnerLname: {
+      type: String,
+      required: true,
+    },
+    bikeOwnerResidence:{
+      type: String,
+      reqiured: true
+    },
+     bikeOwnerID: {
       type: Number,
-      required: true
-    },
-    bikeOwner_fname: {
-      type: String,
-      required: true
-    },
-    bikeOwner_lname: {
-      type: String,
-      required: true
-    },
-    motorBikeMake: {
-      type: String,
-      required: true
-    },
-    bikeOwner_ID: {
-      type: Number,
-      required: true
+      required: true,
     },
     bikeOwnerTelNumber: {
       type: String,
       required: true
     },
-    address: {
-      type: String,
-      required: true
-    },
-    passport_photo: {
-      type: Buffer,
-      required: false
-    },
-    license_number: {
+    motorBikeMake: {
       type: String,
       required: true,
-      unique: true
     },
-    insurance: {
-      number: {
-        type: String,
-        // required: true,
-        unique: true
-      },
-      issue_date: {
-        type: Date,
-        required: true
-        // default: new Date(),
-      },
-      exp_date: {
-        type: Date,
-        required: true
-        // default: new Date(),
-      }
-    },
-    // revisit
-    passport_ID: {
+    motorBikeBrand: {
       type: String,
       required: true,
-      unique: true
     },
-    number_plate: {
+ 
+    insuranceNumber: {
+      type: String,
+      // required: true,
+      unique: true,
+    },
+    insuranceIssueDate: {
+      type: Date,
+      required: true,
+      // default: new Date(),
+    },
+    insuranceExpDate: {
+      type: Date,
+      required: true,
+      // default: new Date(),
+    },
+    numberPlate: {
       type: String,
       required: true,
       unique: true,
@@ -184,6 +202,9 @@ const riderSchema = new mongoose.Schema(
         message: "Invalid number plate"
       }
     },
+    // revisit
+   
+   
     created: {
       type: Date,
       default: new Date()
