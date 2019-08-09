@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const exjwt = require("express-jwt");
 const express = require("express");
+// const router = express.Router();
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
@@ -104,7 +105,7 @@ app.get("/", (req, res) => {
   res.json("this is our first server page");
 });
 
-app.post('/api/riders', (req, res) => {
+app.post("/api/riders", (req, res) => {
   // if (req.body.insurance.issue_date)
   //   req.body.insuranceIssueDate = new Date(req.body.insuranceIssueDate);
   const newRider = new Rider(req.body);
@@ -134,7 +135,7 @@ app.get("/api/riders", (req, res) => {
 });
 
 /* GET SINGLE RIDER BY ID */
-app.get('/api/riders/:id', (req, res) => {
+app.get("/api/riders/:id", (req, res) => {
   let ridersId;
   try {
     ridersId = new ObjectId(req.params.id);
@@ -154,7 +155,7 @@ app.get('/api/riders/:id', (req, res) => {
 });
 
 /* SAVE RIDERS */
-app.post('/api/riders', (req, res) => {
+app.post("/api/riders", (req, res) => {
   const newRider = req.body;
 
   Rider.create(newRider)
@@ -170,7 +171,7 @@ app.post('/api/riders', (req, res) => {
 });
 
 /* UPDATE PRODUCT */
-app.put('/api/riders/:id', (req, res) => {
+app.put("/api/riders/:id", (req, res) => {
   let ridersId;
   try {
     ridersId = new ObjectId(req.params.id);
@@ -377,131 +378,75 @@ app.put("/api/saccos/:id", (req, res) => {
 // resetPasswordToken: String,
 //     resetPasswordExpires: Date
 
-app.post("/forgot", function(req, res, next) {
-  async.waterfall(
-    [
-      function(done) {
-        crypto.randomBytes(20, function(err, buf) {
-          var token = buf.toString("hex");
-          done(err, token);
-        });
-      },
-      function(token, done) {
-        User.findOne({ email: req.body.email }, function(err, user) {
-          if (!user) {
-            res.status(400).json({
-              message: `No accoun with the eail exist`
-            });
-            return res.redirect("/forgot");
-          }
-          user.resetPasswordToken = token;
-          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-          user.save(function(err) {
-            done(err, token, user);
-          });
-        });
-      },
-      function(token, user, done) {
-        var smtpTransport = nodemailer.createTransport("SMTP", {
-          service: "SendGrid",
-          auth: {
-            user: "!!! YOUR SENDGRID USERNAME !!!",
-            pass: "!!! YOUR SENDGRID PASSWORD !!!"
-          }
-        });
-        var mailOptions = {
-          to: user.email,
-          from: "passwordreset@demo.com",
-          subject: "Node.js Password Reset",
-          text:
-            "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
-            "Please click on the following link, or paste this into your browser to complete the process:\n\n" +
-            "http://" +
-            req.headers.host +
-            "/reset/" +
-            token +
-            "\n\n" +
-            "If you did not request this, please ignore this email and your password will remain unchanged.\n"
-        };
-        smtpTransport.sendMail(mailOptions, function(err) {
-          res.send(
-            "info",
-            "An e-mail has been sent to " +
-              user.email +
-              " with further instructions."
-          );
-          done(err, "done");
-        });
-      }
-    ],
-    function(err) {
-      if (err) return next(err);
-      res.redirect("/forgot");
+app.post("/api/reset_password", (req, res) => {
+  if (req.body.email === "") {
+    res.status(400).send("email required");
+  }
+  console.error(req.body.email);
+  User.findOne({ email: req.body.email }).then(user => {
+    if (user === null) {
+      console.error("user not in db");
+      res.status(403).send("email not in db");
+    } else {
+      const token = crypto.randomBytes(20).toString("hex");
+      user.update({
+        resetPasswordToken: token,
+        resetPasswordExpires: Date.now() + 360000
+      });
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: `########@gmail.com`,
+          pass: `######`
+        }
+      });
+      const mailOptions = {
+        from: "#######@gmail.com",
+        to: `${user.email}`,
+        subject: "Link To Reset Password",
+        text:
+          "You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n" +
+          "Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n" +
+          `http://localhost:3000/reset/${token}\n\n` +
+          "If you did not request this, please ignore this email and your password will remain unchanged.\n"
+      };
+      console.log("sending mail");
+      transporter.sendMail(mailOptions, (err, message) => {
+        if (err) {
+          console.error("there was an error", err);
+        } else {
+          console.log("here is the res", response);
+          res.status(200).json("recovery emil sent");
+        }
+      });
     }
-  );
+  });
 });
 
-app.post("/reset/:token", function(req, res) {
-  async.waterfall(
-    [
-      function(done) {
-        User.findOne(
-          {
-            resetPasswordToken: req.params.token,
-            resetPasswordExpires: { $gt: Date.now() }
-          },
-          //check if password reset token is valid
-          function(err, user) {
-            if (!user) {
-              req.flash(
-                "error",
-                "Password reset token is invalid or has expired."
-              );
-              return res.redirect("back");
-            }
+//Whether you are querying with findAll/find or doing bulk updates/destroys you can pass a where object to filter the query.
 
-            user.password = req.body.password;
-            user.resetPasswordToken = undefined;
-            user.resetPasswordExpires = undefined;
-
-            user.save(function(err) {
-              req.logIn(user, function(err) {
-                done(err, user);
-              });
-            });
-          }
-        );
-      },
-      function(user, done) {
-        var smtpTransport = nodemailer.createTransport("SMTP", {
-          service: "SendGrid",
-          auth: {
-            user: "!!! YOUR SENDGRID USERNAME !!!",
-            pass: "!!! YOUR SENDGRID PASSWORD !!!"
-          }
-        });
-        var mailOptions = {
-          to: user.email,
-          from: "passwordreset@demo.com",
-          subject: "Your password has been changed",
-          text:
-            "Hello,\n\n" +
-            "This is a confirmation that the password for your account " +
-            user.email +
-            " has just been changed.\n"
-        };
-        smtpTransport.sendMail(mailOptions, function(err) {
-          req.flash("success", "Success! Your password has been changed.");
-          done(err);
-        });
+//where generally takes an object from attribute:value pairs, where value can be primitives for equality matches or keyed objects for other operators.//
+app.get("/reset", (req, res) => {
+  User.findOne({
+    where: {
+      resetPasswordToken: req.query.resetPasswordToken,
+      resetPasswordExpires: {
+        [Op.gt]: Date.now()
       }
-    ],
-    function(err) {
-      res.redirect("/");
     }
-  );
+  }).then(user => {
+    if (user == null) {
+      console.error("password reset link is invalid or has expired");
+      res.status(403).send("password reset link is invalid or has expired");
+    } else {
+      res.status(200).send({
+        username: user.username,
+        message: "password reset link a-ok"
+      });
+    }
+  });
 });
+
 // creating a connection to mongoose
 // 'mongodb://localhost/fika-safe'
 mongoose
