@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { withRouter } from "react-router";
 
 // reactstrap components
@@ -7,25 +7,19 @@ import {
   Card,
   CardHeader,
   CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
   Media,
   Pagination,
   PaginationItem,
   PaginationLink,
-  Progress,
   Table,
   Container,
-  Row,
-  UncontrolledTooltip,
-} from 'reactstrap';
+  Row
+} from "reactstrap";
 // core components
-import Header from '../Headers/Header.jsx';
-import AuthHelperMethods from 'AuthHelperMethods.js';
+import Header from "../Headers/Header.jsx";
+import AuthHelperMethods from "AuthHelperMethods.js";
 //Our higher order component
-import withAuth from 'withAuth.js';
+import withAuth from "withAuth.js";
 
 class Tables extends React.Component {
   render() {

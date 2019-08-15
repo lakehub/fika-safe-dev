@@ -201,8 +201,8 @@ class NewSacco extends React.Component {
                   style={{ background: "#e4f0f7" }}
                   className="pt-0 pt-md-4"
                 >
-                <div className="justify-content-center">
-                  <ProfileImage />
+                  <div className="justify-content-center">
+                    <ProfileImage />
                   </div>
                   <Row>
                     <div className="col">

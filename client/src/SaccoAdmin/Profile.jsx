@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import ProfileImage from "./imageupload.jsx";
-import AvatarEditor from "react-avatar-editor";
+import Image from "./imageupload.jsx"
 // reactstrap components
 
 import {
@@ -128,7 +127,7 @@ class Profile extends React.Component {
                 <Row className="justify-content-center">
                   <Col className="order-lg-2" lg="3" />
                 </Row>
-
+                <Image />
                 <CardBody
                   style={{ background: "#e4f0f7" }}
                   className="pt-0 pt-md-4"

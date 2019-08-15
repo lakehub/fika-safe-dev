@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 
 // reactstrap components
@@ -40,13 +23,9 @@ class Header extends React.Component {
                           >
                             Registerd Saccos
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">
-                            783
-                          </span>
+                          <span className="h2 font-weight-bold mb-0">783</span>
                         </div>
-
                       </Row>
-                      
                     </CardBody>
                   </Card>
                 </Col>
@@ -65,9 +44,7 @@ class Header extends React.Component {
                             5,444
                           </span>
                         </div>
-                       
                       </Row>
-                   
                     </CardBody>
                   </Card>
                 </Col>
@@ -84,9 +61,7 @@ class Header extends React.Component {
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">761</span>
                         </div>
-                        
                       </Row>
-                
                     </CardBody>
                   </Card>
                 </Col>
@@ -101,13 +76,9 @@ class Header extends React.Component {
                           >
                             Deactivated Saccos
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">
-                            22
-                          </span>
+                          <span className="h2 font-weight-bold mb-0">22</span>
                         </div>
-                       
                       </Row>
-                    
                     </CardBody>
                   </Card>
                 </Col>

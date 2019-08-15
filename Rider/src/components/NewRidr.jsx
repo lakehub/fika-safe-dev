@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { url } from 'domain.js';
-import ImageRender from 'components/image-uploads/ImageRender.jsx';
+import Image from "./ImageUpload.jsx"
 
 import {
   Button,
@@ -185,7 +185,7 @@ class Profile extends React.Component {
                   style={{ background: '#e4f0f7' }}
                   className="pt-0 pt-md-4"
                 >
-                  <ImageRender />
+                  <Image />
                   {/* <div>
                     <div className="buttons">{content()}</div>
                   </div> */}

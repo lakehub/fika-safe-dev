@@ -28,7 +28,7 @@ class TableWhite extends React.Component {
       data1: [],
       sortBy: "name",
       searchQuery: "",
-      space:' ',
+      space: " ",
       query: { status: "" }
     };
   }

@@ -1,10 +1,8 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from "react";
 // reactstrap components
 import {
   Button,
   Card,
-  CardHeader,
   NavbarBrand,
   CardBody,
   FormGroup,
@@ -14,12 +12,12 @@ import {
   InputGroupText,
   InputGroup,
   Row,
-  Col,
-} from 'reactstrap';
+  Col
+} from "reactstrap";
 
 class Login extends React.Component {
   componentDidMount() {
-    document.body.classList.add('bg-default');
+    document.body.classList.add("bg-default");
   }
   render() {
     const { handleChange, handleSubmit, email, password } = this.props;
@@ -29,11 +27,11 @@ class Login extends React.Component {
           <Card className="bg-secondary shadow border-0">
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
-                <div className="container div1" style={{ size: '50px' }}>
+                <div className="container div1" style={{ size: "50px" }}>
                   <NavbarBrand>
                     <img
                       alt="..."
-                      src={require('assets/img/brand/fikas.png')}
+                      src={require("assets/img/brand/fikas.png")}
                     />
                   </NavbarBrand>
                 </div>

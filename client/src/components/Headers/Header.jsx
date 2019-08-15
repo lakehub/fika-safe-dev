@@ -1,36 +1,34 @@
-
 import React from "react";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
 class Header extends React.Component {
-
   render() {
     //some basic javascript code
     // the data props is an array of objects
-    const {data}= this.props;
-    
+    const { data } = this.props;
+
     const activeArr = [];
-    const deactivatedArr=[];
-// active saccos
-  data.map(sacco=>{
-  if(sacco.status==='Active'){
-    activeArr.push(sacco);
-  }
+    const deactivatedArr = [];
+    // active saccos
+    data.map(sacco => {
+      if (sacco.status === "Active") {
+        activeArr.push(sacco);
+      }
     });
-let activeSaccos = activeArr.length;
+    let activeSaccos = activeArr.length;
 
-// Deactivated saccos
-data.map(sacco=>{
-  if(sacco.status==='Deactivated'){
-    deactivatedArr.push(sacco);
-  }
-})
-let deactivatedSaccos=deactivatedArr.length;
+    // Deactivated saccos
+    data.map(sacco => {
+      if (sacco.status === "Deactivated") {
+        deactivatedArr.push(sacco);
+      }
+    });
+    let deactivatedSaccos = deactivatedArr.length;
 
-// registered saccos
-const registeredSaccos = data.length;
+    // registered saccos
+    const registeredSaccos = data.length;
 
     return (
       <>
@@ -54,9 +52,7 @@ const registeredSaccos = data.length;
                             {registeredSaccos}
                           </span>
                         </div>
-
                       </Row>
-                      
                     </CardBody>
                   </Card>
                 </Col>
@@ -75,9 +71,7 @@ const registeredSaccos = data.length;
                             5,444
                           </span>
                         </div>
-                       
                       </Row>
-                   
                     </CardBody>
                   </Card>
                 </Col>
@@ -92,11 +86,11 @@ const registeredSaccos = data.length;
                           >
                             Active Saccos
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">{activeSaccos}</span>
+                          <span className="h2 font-weight-bold mb-0">
+                            {activeSaccos}
+                          </span>
                         </div>
-                        
                       </Row>
-                
                     </CardBody>
                   </Card>
                 </Col>
@@ -115,9 +109,7 @@ const registeredSaccos = data.length;
                             {deactivatedSaccos}
                           </span>
                         </div>
-                       
                       </Row>
-                    
                     </CardBody>
                   </Card>
                 </Col>

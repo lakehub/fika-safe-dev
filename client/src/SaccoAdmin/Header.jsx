@@ -1,4 +1,3 @@
-
 import React from "react";
 
 // reactstrap components
@@ -28,9 +27,7 @@ class Header extends React.Component {
                             5,444
                           </span>
                         </div>
-                       
                       </Row>
-                   
                     </CardBody>
                   </Card>
                 </Col>
@@ -47,9 +44,7 @@ class Header extends React.Component {
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">761</span>
                         </div>
-                        
                       </Row>
-                
                     </CardBody>
                   </Card>
                 </Col>
@@ -64,13 +59,9 @@ class Header extends React.Component {
                           >
                             Deactivated Riders
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">
-                            22
-                          </span>
+                          <span className="h2 font-weight-bold mb-0">22</span>
                         </div>
-                       
                       </Row>
-                    
                     </CardBody>
                   </Card>
                 </Col>

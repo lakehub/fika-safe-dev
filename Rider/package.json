@@ -24,7 +24,7 @@
   },
   "homepage": "https://demos.creative-tim.com/argon-dashboard-react/",
   "scripts": {
-    "start": "NODE_PATH=./src react-scripts start",
+    "start": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

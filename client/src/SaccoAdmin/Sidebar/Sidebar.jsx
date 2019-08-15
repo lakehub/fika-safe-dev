@@ -1,4 +1,3 @@
-
 import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
@@ -6,17 +5,11 @@ import { PropTypes } from "prop-types";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
   Collapse,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  FormGroup,
   Form,
   Input,
   InputGroupAddon,
@@ -28,14 +21,10 @@ import {
   NavItem,
   NavLink,
   Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col
 } from "reactstrap";
-
-var ps;
 
 class Sidebar extends React.Component {
   state = {
@@ -120,37 +109,34 @@ class Sidebar extends React.Component {
           ) : null}
           {/* User */}
           <Nav className="align-items-center d-md-none">
-          <UncontrolledDropdown nav>
-                <DropdownToggle className="pr-0" nav>
-                  <Media className="align-items-center">
-                    <span className="avatar avatar-sm rounded-circle">
+            <UncontrolledDropdown nav>
+              <DropdownToggle className="pr-0" nav>
+                <Media className="align-items-center">
+                  <span className="avatar avatar-sm rounded-circle">
                     <i className=" ni ni-single-02" />
-                            
-                    </span>
-
-                  </Media>
-                </DropdownToggle>
-                <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem className="noti-title" header tag="div">
-                    <h6 className="text-overflow m-0">Welcome!</h6>
-                  </DropdownItem>
-                  <Link to="/admin/admin-profile">
+                  </span>
+                </Media>
+              </DropdownToggle>
+              <DropdownMenu className="dropdown-menu-arrow" right>
+                <DropdownItem className="noti-title" header tag="div">
+                  <h6 className="text-overflow m-0">Welcome!</h6>
+                </DropdownItem>
+                <Link to="/admin/admin-profile">
                   <DropdownItem>
                     <i className="ni ni-single-02" />
                     <span>profile</span>
                   </DropdownItem>
-                  </Link>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-archive-2" />
-                    <span>Logs</span>
-                  </DropdownItem>
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                    <i className="ni ni-user-run" />
-                    <span>Logout</span>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            
+                </Link>
+                <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <i className="ni ni-archive-2" />
+                  <span>Logs</span>
+                </DropdownItem>
+                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <i className="ni ni-user-run" />
+                  <span>Logout</span>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
           {/* Collapse */}
           <Collapse navbar isOpen={this.state.collapseOpen}>
@@ -200,34 +186,31 @@ class Sidebar extends React.Component {
             </Form>
             {/* Navigation */}
             <Nav navbar>
-
-            <NavItem >
-          <NavLink
-            to="/sacco/home"
-            tag={NavLinkRRD}
-            onClick={this.closeCollapse}
-            activeClassName="active"
-          >
-            <i className="fa fa-tv" />
-            Dashboard
-          </NavLink>
-        </NavItem>
-        <NavItem >
-          <NavLink
-            to="/sacco/logs"
-            tag={NavLinkRRD}
-            onClick={this.closeCollapse}
-            activeClassName="active"
-          >
-            <i className="fa fa-archive" />
-            Logs
-          </NavLink>
-        </NavItem>
-            
+              <NavItem>
+                <NavLink
+                  to="/sacco/home"
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                >
+                  <i className="fa fa-tv" />
+                  Dashboard
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  to="/sacco/logs"
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                >
+                  <i className="fa fa-archive" />
+                  Logs
+                </NavLink>
+              </NavItem>
             </Nav>
             {/* Divider */}
             <hr className="my-3" />
-
           </Collapse>
         </Container>
       </Navbar>

@@ -1,24 +1,7 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 // reactstrap components
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row } from "reactstrap";
 
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
@@ -55,9 +38,7 @@ class Auth extends React.Component {
           <AuthNavbar />
           <div className="header bg-gradient-success py-7 py-lg-8">
             <Container>
-              <div className="header-body text-center mb-7">
-
-              </div>
+              <div className="header-body text-center mb-7"></div>
             </Container>
             <div className="separator separator-bottom separator-skew zindex-100">
               <svg

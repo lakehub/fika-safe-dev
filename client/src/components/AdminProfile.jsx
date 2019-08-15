@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 
 // reactstrap components
@@ -25,7 +7,6 @@ import {
   CardHeader,
   CardBody,
   Container,
-  CardFooter,
   CardTitle,
   FormGroup,
   Form,
@@ -38,7 +19,7 @@ class AdminProfile extends React.Component {
   render() {
     return (
       <>
-              <div
+        <div
           className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
           style={{
             minHeight: "400px",
@@ -60,9 +41,9 @@ class AdminProfile extends React.Component {
             </Row>
           </Container>
         </div>
-        <div style={{marginTop:"50px"}} className="content">
-          <Row> 
-            <Col style={{marginLeft:"15%", }} md="8">
+        <div style={{ marginTop: "50px" }} className="content">
+          <Row>
+            <Col style={{ marginLeft: "15%" }} md="8">
               <Card className="card-user">
                 <CardHeader>
                   <CardTitle tag="h5">Edit Profile</CardTitle>
@@ -70,28 +51,19 @@ class AdminProfile extends React.Component {
                 <CardBody>
                   <Form>
                     <Row>
-                      <Col className="pr-1" md="5">
-
-                      </Col>
-
+                      <Col className="pr-1" md="5"></Col>
                     </Row>
                     <Row>
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>First Name</label>
-                          <Input
-                            placeholder="First Name"
-                            type="text"
-                          />
+                          <Input placeholder="First Name" type="text" />
                         </FormGroup>
                       </Col>
                       <Col className="pl-1" md="6">
                         <FormGroup>
                           <label>Last Name</label>
-                          <Input
-                            placeholder="Last Name"
-                            type="text"
-                          />
+                          <Input placeholder="Last Name" type="text" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -99,10 +71,7 @@ class AdminProfile extends React.Component {
                       <Col md="12">
                         <FormGroup>
                           <label>Email ddress</label>
-                          <Input
-                            placeholder="email"
-                            type="email"
-                          />
+                          <Input placeholder="email" type="email" />
                         </FormGroup>
                       </Col>
                     </Row>
@@ -110,17 +79,13 @@ class AdminProfile extends React.Component {
                       <Col className="pr-1" md="6">
                         <FormGroup>
                           <label>Password</label>
-                          <Input
-                            type="password"
-                          />
+                          <Input type="password" />
                         </FormGroup>
                       </Col>
                       <Col className="pl-1" md="6">
                         <FormGroup>
                           <label>Confirm password</label>
-                          <Input
-                            type="password"
-                          />
+                          <Input type="password" />
                         </FormGroup>
                       </Col>
                     </Row>

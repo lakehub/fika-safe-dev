@@ -20,7 +20,7 @@ export default class AdminRow extends Component {
       status: sacco.status
     };
   }
-  
+
   // onclik handler functions
   onEditSacco = ({
     event: {

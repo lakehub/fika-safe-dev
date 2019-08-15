@@ -1,13 +1,12 @@
-
-import React, {Component} from 'react';
-import Sidebar from '../Sidebar/Sidebar.jsx'
-import Footer from '../Footers/AdminFooter.jsx'
-import AddRider from '../NewRidr.jsx'
+import React, { Component } from "react";
+import Sidebar from "../Sidebar/Sidebar.jsx";
+import Footer from "../Footers/AdminFooter.jsx";
+import AddRider from "../NewRidr.jsx";
 import { Container } from "reactstrap";
 
-import AuthHelperMethods from 'AuthHelperMethods.js';
+import AuthHelperMethods from "AuthHelperMethods.js";
 //Our higher order component
-import withAuth from 'withAuth.js';
+import withAuth from "withAuth.js";
 
 class Dashboard extends Component {
   render() {
@@ -15,13 +14,13 @@ class Dashboard extends Component {
       <>
         <Sidebar
           logo={{
-            innerLink: '/sacco/home',
-            imgSrc: require('assets/img/brand/argon-react.png'),
-            imgAlt: '...',
+            innerLink: "/sacco/home",
+            imgSrc: require("assets/img/brand/argon-react.png"),
+            imgAlt: "..."
           }}
         />
         <div
-          style={{ marginLeft: '30%' }}
+          style={{ marginLeft: "30%" }}
           className="main-content"
           ref="mainContent"
         >

@@ -1,34 +1,6 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-import { Link } from "react-router-dom";
 // reactstrap components
-import {
-  UncontrolledCollapse,
-  NavbarBrand,
-  Navbar,
-  NavItem,
-  NavLink,
-  Nav,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import { UncontrolledCollapse, Navbar, Container, Row, Col } from "reactstrap";
 
 class AdminNavbar extends React.Component {
   render() {
@@ -39,7 +11,6 @@ class AdminNavbar extends React.Component {
           expand="lg"
         >
           <Container className="px-4">
-
             <button className="navbar-toggler" id="navbar-collapse-main">
               <span className="navbar-toggler-icon" />
             </button>
@@ -57,7 +28,6 @@ class AdminNavbar extends React.Component {
                   </Col>
                 </Row>
               </div>
-             
             </UncontrolledCollapse>
           </Container>
         </Navbar>

@@ -1,12 +1,10 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 // reactstrap components
 import {
   Button,
   Card,
-  CardHeader,
   NavbarBrand,
   CardBody,
   FormGroup,
