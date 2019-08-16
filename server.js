@@ -139,7 +139,7 @@ app.post('/sms', (req, res) => {
       // Set your message
       message: sms_message,
       // Set your shortCode or senderId
-      from: "65456"
+      from: "LakeHub"
     }
     sms.send(options)
       .then(console.log)
