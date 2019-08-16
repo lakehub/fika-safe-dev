@@ -35,8 +35,8 @@ var corsOptions = {
     }
   }
 }
-// passing the allowed domains to the  cors options
-app.use(cors(corsOptions));
+// passing the allowed domains to the  cors optionss
+app.use(cors());
 
 
 
