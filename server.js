@@ -17,15 +17,15 @@ const path = require('path');
 const cors =require('cors')
 
 // handles images
-const cloudinary = require('cloudinary')
-const formData = require('express-form-data')
+// const cloudinary = require('cloudinary')
+// const formData = require('express-form-data')
 
 // const port = process.env.PORT || 4040;
 app.use(logger('dev'))
 app.use("/uploads", express.static('uploads'));
 // handling cross origin requests
 // whitelisting some allowed domains
-var whitelist = ['http://localhost:3000','https://sacco-client.herokuapp.com','https://rider-client.herokuapp.com'];
+var whitelist = ['http://localhost:3000','https://sacco-client.herokuapp.com','https://rider-client.herokuapp.com', 'https://account.africastalking.com'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -40,7 +40,7 @@ app.use(cors(corsOptions));
 
 
 
-//setting image storage route
+//setting image storage path
 const uploads = 'uploads/';
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -276,8 +276,9 @@ app.get('/', (req, res) => {
 
 
 app.post("/api/riders", upload.single('riderPassportPhoto'), (req, res, next) => {
+// console.log(req.body.riderPassportPhoto);
+req.body.riderPassportPhoto = '';
   const riders = new Rider({
-    riderPassportPhoto: req.file.path,
     ...req.body
   })
   riders
@@ -359,6 +360,7 @@ app.get('/api/riders/id/:id', (req, res) => {
 
 /* SAVE RIDERS */
 app.post('/api/riders', (req, res) => {
+  console.log(req.body );
   const newRider = req.body;
 
   Rider.create(newRider)

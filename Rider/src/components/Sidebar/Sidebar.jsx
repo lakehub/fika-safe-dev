@@ -39,10 +39,16 @@ var ps;
 class Sidebar extends React.Component {
   state = {
     collapseOpen: false,
+    email: this.props.email,
   };
   constructor(props) {
     super(props);
     this.activeRoute.bind(this);
+  }
+  componentDidMount() {
+    this.setState({
+      email: this.props.email,
+    });
   }
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
@@ -79,6 +85,7 @@ class Sidebar extends React.Component {
     });
   };
   render() {
+    console.log(this.props.email);
     const { bgColor, routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
@@ -198,7 +205,7 @@ class Sidebar extends React.Component {
             <Nav navbar>
               <NavItem>
                 <NavLink
-                  to="/sacco/home"
+                  to={`/sacco/home/${this.state.email}`}
                   tag={NavLinkRRD}
                   onClick={this.closeCollapse}
                   activeClassName="active"
