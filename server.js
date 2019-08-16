@@ -36,6 +36,7 @@ var corsOptions = {
   }
 }
 // passing the allowed domains to the  cors optionss
+//alert security threat
 app.use(cors());
 
 
