@@ -172,7 +172,7 @@ class NewSacco extends React.Component {
         console.log(err);
         alert("unable create the sacco");
       });
-  };
+  }
 
   toggle() {
     this.setState(prevState => ({

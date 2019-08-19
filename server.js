@@ -17,15 +17,15 @@ const path = require('path');
 const cors =require('cors')
 
 // handles images
-const cloudinary = require('cloudinary')
-const formData = require('express-form-data')
+// const cloudinary = require('cloudinary')
+// const formData = require('express-form-data')
 
 // const port = process.env.PORT || 4040;
 app.use(logger('dev'))
 app.use("/uploads", express.static('uploads'));
 // handling cross origin requests
 // whitelisting some allowed domains
-var whitelist = ['http://localhost:3000','https://sacco-client.herokuapp.com','https://rider-client.herokuapp.com'];
+var whitelist = ['http://localhost:3000','https://sacco-client.herokuapp.com','https://rider-client.herokuapp.com', 'https://account.africastalking.com'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -35,12 +35,13 @@ var corsOptions = {
     }
   }
 }
-// passing the allowed domains to the  cors options
-app.use(cors(corsOptions));
+// passing the allowed domains to the  cors optionss
+//alert security threat
+app.use(cors());
 
 
 
-//setting image storage route
+//setting image storage path
 const uploads = 'uploads/';
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -139,7 +140,7 @@ app.post('/sms', (req, res) => {
       // Set your message
       message: sms_message,
       // Set your shortCode or senderId
-      from: "65456"
+      from: "LakeHub"
     }
     sms.send(options)
       .then(console.log)
@@ -148,7 +149,11 @@ app.post('/sms', (req, res) => {
   let client_phone_number = phoneNumber;
   let sms_message;
   console.log(`sms received`);
-  Rider.findOne({ numberPlate: text }).exec().then((result) => {
+  // fucntion  expression
+ function  trimMessage(senderMessage){
+    return senderMesssage.slice(9,17);
+  }
+  Rider.findOne({ numberPlate: trimMessage(text) }).exec().then((result) => {
     if (result) {
       let rider = result;
       try {
@@ -167,14 +172,7 @@ app.post('/sms', (req, res) => {
       // })
       sms_message =
         `
-            Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},
-            Plate Number: ${rider.numberPlate},
-            sacco: ,
-            Sacco Leader:  ,
-            Motorbike Make: ${rider.motorBikeMake},
-            Sacco Code:,
-            Motorbike Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname},
-            Rider's Contact:${rider.riderTelNumber},
+            Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},\nPlate Number: ${rider.numberPlate},\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${rider.motorBikeMake},\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname},\nRider's Contact:${rider.riderTelNumber},\n
             Sacco Contact:`;
       sendMessage(client_phone_number, sms_message);
     } else {
@@ -276,8 +274,9 @@ app.get('/', (req, res) => {
 
 
 app.post("/api/riders", upload.single('riderPassportPhoto'), (req, res, next) => {
+// console.log(req.body.riderPassportPhoto);
+req.body.riderPassportPhoto = '';
   const riders = new Rider({
-    riderPassportPhoto: req.file.path,
     ...req.body
   })
   riders
@@ -359,6 +358,7 @@ app.get('/api/riders/id/:id', (req, res) => {
 
 /* SAVE RIDERS */
 app.post('/api/riders', (req, res) => {
+  console.log(req.body );
   const newRider = req.body;
 
   Rider.create(newRider)

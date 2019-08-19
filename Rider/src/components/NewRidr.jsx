@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { url } from 'domain.js';
-import Image from "./ImageUpload.jsx"
+import Image from './ImageUpload.jsx';
 
 import {
   Button,
@@ -31,11 +31,11 @@ class Profile extends React.Component {
       riderTelNumber: '',
       riderID: '',
       riderResidence: '',
-      // riderPassportPhoto:'',
+      riderPassportPhoto: {},
       riderBase: '',
       drivingLicense: '',
-      DLIssueDate: '',
-      DLExpDate: '',
+      DLIssueDate: '5/5/2018',
+      DLExpDate: '5/5/2019',
 
       bikeOwnerFname: '',
       bikeOwnerLname: '',
@@ -46,23 +46,19 @@ class Profile extends React.Component {
       motorBikeMake: '',
       motorBikeBrand: '',
       insuranceNumber: '',
-      insuranceIssueDate: '',
-      insuranceExpDate: '',
+      insuranceIssueDate: '5/5/2018',
+      insuranceExpDate: '5/5/2019',
       numberPlate: '',
 
       // created,
-      status: '',
+      status: 'Active',
 
       ratings: 3,
       sacco: '',
+
       diabled: true,
       red: true,
       name: 'active',
-
-      // images
-      uploading: false,
-      imagePreviewUrl: '',
-      images: [],
     };
   }
 
@@ -74,12 +70,13 @@ class Profile extends React.Component {
   // fetch data for the specific sacco
   loadData() {
     // axios is so messsy
-    fetch(`${url}/api/saccos/email/${this.props.email}`)
+    fetch(`/${url}api/saccos/email/${this.props.email}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
         let id = data.map(item => item._id);
         // set the state with the id
+        console.log(id[0]);
         this.setState({
           sacco: id[0],
         });
@@ -91,19 +88,50 @@ class Profile extends React.Component {
 
   // handle change
   handleChange = event => {
+    event.preventDefault();
     const target = event.target;
     const { name, value } = target;
-    const formData = new FormData();
-    formData.append([name], value);
-    event.preventDefault();
+
     this.setState({
       [name]: value,
     });
   };
 
+  handleImageSubmit = image => {
+    this.setState({
+      riderPassportPhoto: image,
+    });
+    alert('The image was uploaded successfully' + image.name);
+  };
+
   handleSubmit = event => {
     event.preventDefault();
-    this.props.saveData(this.state.rider);
+    let data = this.state;
+    console.log(data);
+    this.saveData(data);
+  };
+
+  saveData = data => {
+    // preprocess the image
+    const file = new FormData();
+
+    file.append('file', this.state.riderPassportPhoto);
+    console.log(file);
+    // data.riderPassportPhoto = file;
+    fetch(`${url}/api/riders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        alert('added rider successfully');
+      })
+      .catch(err => {
+        console.log(err);
+        alert('unable add the rider');
+      });
   };
 
   // onDeactivate:
@@ -117,8 +145,9 @@ class Profile extends React.Component {
     let btn_class = this.state.red ? 'info' : 'danger';
     let btn_name = this.state.name ? 'Active' : 'Deactivated';
     //const { name,id} = this.props;
-    console.log(this.props);
-    console.log(this.state.sacco);
+    // console.log(this.props);
+    // console.log(this.state.data);
+    // console.log(this.state.images);
     const {
       riderFname,
       riderSurName,
@@ -185,7 +214,7 @@ class Profile extends React.Component {
                   style={{ background: '#e4f0f7' }}
                   className="pt-0 pt-md-4"
                 >
-                  <Image />
+                  <Image handleImageSubmit={this.handleImageSubmit} />
                   {/* <div>
                     <div className="buttons">{content()}</div>
                   </div> */}

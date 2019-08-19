@@ -5,6 +5,7 @@ import Footer from 'components/Footers/AdminFooter.jsx';
 import Header from 'components/Headers/Header.jsx';
 import SaccoHome from 'components/SaccoHome.jsx';
 import { Container } from 'reactstrap';
+import { url } from 'domain.js';
 
 /* Once the 'Authservice' and 'withAuth' componenets are created, import them into App.js */
 import AuthHelperMethods from 'AuthHelperMethods.js';
@@ -30,7 +31,7 @@ class Dashboard extends Component {
   }
   loadData() {
     // axios is so messsy
-    fetch(`/api/riders/email/${this.props.match.params.email}`)
+    fetch(`${url}/api/riders/email/${this.props.match.params.email}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -45,9 +46,12 @@ class Dashboard extends Component {
   }
   render() {
     console.log(this.state.data);
+    const email = this.props.match.params.email;
+    console.log(this.props);
     return (
       <>
         <Sidebar
+          email={this.props.match.params.email}
           logo={{
             innerLink: '/sacco/home',
             imgSrc: require('assets/img/brand/argon-react.png'),
