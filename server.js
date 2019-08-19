@@ -149,7 +149,11 @@ app.post('/sms', (req, res) => {
   let client_phone_number = phoneNumber;
   let sms_message;
   console.log(`sms received`);
-  Rider.findOne({ numberPlate: text }).exec().then((result) => {
+  // fucntion  expression
+ function  trimMessage(senderMessage){
+    return senderMesssage.slice(9,17);
+  }
+  Rider.findOne({ numberPlate: trimMessage(text) }).exec().then((result) => {
     if (result) {
       let rider = result;
       try {
@@ -168,14 +172,7 @@ app.post('/sms', (req, res) => {
       // })
       sms_message =
         `
-            Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},
-            Plate Number: ${rider.numberPlate},
-            sacco: ,
-            Sacco Leader:  ,
-            Motorbike Make: ${rider.motorBikeMake},
-            Sacco Code:,
-            Motorbike Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname},
-            Rider's Contact:${rider.riderTelNumber},
+            Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},\nPlate Number: ${rider.numberPlate},\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${rider.motorBikeMake},\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname},\nRider's Contact:${rider.riderTelNumber},\n
             Sacco Contact:`;
       sendMessage(client_phone_number, sms_message);
     } else {
