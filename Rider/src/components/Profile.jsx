@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-
 import {
   Button,
   Card,
@@ -107,13 +106,13 @@ class Profile extends React.Component {
       <div
         className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
-          minHeight: "400px",
+          minHeight: '400px',
           backgroundImage: `url(/${pic})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center top"
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
         }}
       ></div>
-      );
+    );
     return (
       <>
         <UserHeader name={`${riderFname} ${riderLname}`} />
@@ -130,8 +129,7 @@ class Profile extends React.Component {
                   style={{ background: '#e4f0f7' }}
                   className="pt-0 pt-md-4"
                 >
-         
-                <div>{imagePreview}</div>
+                  <div>{imagePreview}</div>
                   <Row>
                     <div className="col">
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
@@ -325,10 +323,10 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              value={moment(DLIssueDate).format('MM-DD-YYYY')}
+                              value={DLIssueDate}
                               name="DLIssueDate"
                               onChange={this.handleChange}
-                              placeholder="Issue date"
+                              placeholder="MM-DD-YYYY"
                               type="text"
                             />
                           </FormGroup>
@@ -343,10 +341,10 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              value={moment(DLExpDate).format('MM-DD-YYYY')}
+                              value={DLExpDate}
                               name="DLExpDate"
                               onChange={this.handleChange}
-                              placeholder="Exp date"
+                              placeholder="MM-DD-YYYY"
                               type="text"
                             />
                           </FormGroup>
@@ -578,13 +576,11 @@ class Profile extends React.Component {
                               Issue Date:
                             </label>
                             <Input
-                              value={moment(insuranceIssueDate).format(
-                                'MM-DD-YYYY'
-                              )}
+                              value={insuranceIssueDate}
                               name="insuranceIssueDate"
                               onChange={this.handleChange}
                               className="form-control-alternative"
-                              placeholder="Issue Date"
+                              placeholder="MM-DD-YYYY"
                               type="text"
                             />
                           </FormGroup>
@@ -598,13 +594,11 @@ class Profile extends React.Component {
                               Exp Date:
                             </label>
                             <Input
-                              value={moment(insuranceExpDate).format(
-                                'MM-DD-YYYY'
-                              )}
+                              value={insuranceExpDate}
                               name="insuranceExpDate"
                               onChange={this.handleChange}
                               className="form-control-alternative"
-                              placeholder="Exp Date "
+                              placeholder="MM-DD-YYYY"
                               type="text"
                             />
                           </FormGroup>

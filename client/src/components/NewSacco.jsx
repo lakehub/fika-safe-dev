@@ -1,7 +1,7 @@
 import React from "react";
 // import AdminLayout from '../layouts/Admin.jsx'
 import { url } from "domain.js";
-
+import { withRouter } from "react-router";
 // reactstrap components
 import {
   Button,
@@ -26,6 +26,7 @@ const emailRegex = RegExp(
 
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
+  console.log(Object.values(formErrors));
   // validate form errors being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
@@ -52,6 +53,7 @@ class NewSacco extends React.Component {
       postal_code: 0,
       password: "",
       confirmPassword: "",
+      uniqueSaccoCode: "",
       // sendPassword: '',
       // newUser: null,
       formErrors: {
@@ -69,6 +71,9 @@ class NewSacco extends React.Component {
       }
     };
     this.toggle = this.toggle.bind(this);
+  }
+  componentDidMount() {
+    this.loadData();
   }
 
   // validation
@@ -149,7 +154,8 @@ class NewSacco extends React.Component {
         email: data.email,
         address: `P.O.BOX ${data.address}`,
         postal_code: data.postal_code,
-        password: data.confirmPassword
+        password: data.confirmPassword,
+        uniqueSaccoCode: data.uniqueSaccoCode
       });
     } else {
       console.log("Invalid");
@@ -164,13 +170,31 @@ class NewSacco extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
+        alert(`added rider successfully`);
         const { history } = this.props;
-        //history.push(`/admin/index`);
+        // history.push(`/admin/home`);
       })
       .catch(err => {
         console.log(err);
         alert("unable create the sacco");
+      });
+  };
+
+  loadData() {
+    fetch(`${url}/api/saccos`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        return data.length + 2 + 1000;
+      })
+      .then(result => {
+        this.setState({
+          uniqueSaccoCode: result
+        });
+      })
+      .catch(err => {
+        window.alert(err);
       });
   }
 
@@ -181,10 +205,12 @@ class NewSacco extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const {
       description,
       website,
       date_founded,
+      uniqueSaccoCode,
       name,
       address,
       registration_number,
@@ -425,6 +451,24 @@ class NewSacco extends React.Component {
                             )}
                           </FormGroup>
                         </Col>
+
+                        {/* <Col lg="4">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                              htmlFor="input-code"
+                            >
+                              Sacco Code
+                            </label>
+                            <Input
+                              className="form-control-alternative"
+                              value={uniqueSaccoCode}
+                              placeholder="Sacco code"
+                              type="number"
+                            />
+                          </FormGroup>
+                        </Col> */}
+
                         <Col lg="4">
                           <FormGroup>
                             <label
@@ -580,4 +624,4 @@ class NewSacco extends React.Component {
   }
 }
 
-export default NewSacco;
+export default withRouter(NewSacco);

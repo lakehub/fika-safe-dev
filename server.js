@@ -12,44 +12,47 @@ const nodemailer = require('nodemailer');
 const app = express();
 const logger = require('morgan');
 const router = express.Router();
-const {API_KEY2, API_KEY, port} = require('./config.js');
+const { API_KEY2, API_KEY, port } = require('./config.js');
 const path = require('path');
-const cors =require('cors')
+const cors = require('cors');
 
 // handles images
 // const cloudinary = require('cloudinary')
 // const formData = require('express-form-data')
 
 // const port = process.env.PORT || 4040;
-app.use(logger('dev'))
-app.use("/uploads", express.static('uploads'));
+app.use(logger('dev'));
+app.use('/uploads', express.static('uploads'));
 // handling cross origin requests
 // whitelisting some allowed domains
-var whitelist = ['http://localhost:3000','https://sacco-client.herokuapp.com','https://rider-client.herokuapp.com', 'https://account.africastalking.com'];
+var whitelist = [
+  'http://localhost:3000',
+  'https://sacco-client.herokuapp.com',
+  'https://rider-client.herokuapp.com',
+  'https://account.africastalking.com',
+];
 var corsOptions = {
-  origin: function (origin, callback) {
+  origin: function(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'))
+      callback(new Error('Not allowed by CORS'));
     }
-  }
-}
+  },
+};
 // passing the allowed domains to the  cors optionss
 //alert security threat
 app.use(cors());
-
-
 
 //setting image storage path
 const uploads = 'uploads/';
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "./uploads/");
+    cb(null, './uploads/');
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString() + file.originalname);
-  }
+  },
 });
 
 //filter image files
@@ -62,18 +65,16 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 1024 * 1024 * 9
+    fileSize: 1024 * 1024 * 9,
   },
-  fileFilter: fileFilter
+  fileFilter: fileFilter,
 });
-
 
 // authentication middlware
 // const jwtMW = require('./middleware');
-
 
 /*========= Here we want to let the server know that we should expect and allow a header with the content-type of 'Authorization' ============*/
 app.use((req, res, next) => {
@@ -121,13 +122,13 @@ app.post('/api/register', async (request, response) => {
 
 //Africastalking SMS
 app.post('/sms', (req, res) => {
-  let { sessionId, serviceCode, from, text } = req.body
+  let { sessionId, serviceCode, from, text } = req.body;
   let phoneNumber = from;
   const credentials = {
     apiKey: API_KEY,
     username: 'loopedin',
-    shortcode: '22384'
-  }
+    shortcode: '22384',
+  };
   console.log(credentials);
   // Initialize the SDK
   const AfricasTalking = require('africastalking')(credentials);
@@ -140,9 +141,10 @@ app.post('/sms', (req, res) => {
       // Set your message
       message: sms_message,
       // Set your shortCode or senderId
-      from: "LakeHub"
-    }
-    sms.send(options)
+      from: 'LakeHub',
+    };
+    sms
+      .send(options)
       .then(console.log)
       .catch(console.log);
   }
@@ -150,45 +152,52 @@ app.post('/sms', (req, res) => {
   let sms_message;
   console.log(`sms received`);
   // fucntion  expression
- function  trimMessage(senderMessage){
-    return senderMesssage.slice(9,17);
+  function trimMessage(senderMessage) {
+    return senderMesssage.slice(9, 17);
   }
-  Rider.findOne({ numberPlate: trimMessage(text) }).exec().then((result) => {
-    if (result) {
-      let rider = result;
-      try {
-        saccoId = result.sacco;
-        console.log(saccoId);
-      } catch (error) {
-        res.json({ message: `Invalid sacco id ${error}` });
-      }
-      // let riderSacco;
-      // searching for the specific sacco registered to the riders
-      // Sacco.findById({ _id: saccoId }).then((sacco) => {
-      //   console.log(sacco);
-      //   riderSacco = sacco;
-      // }).catch(err => {
-      //   console.log(err);
-      // })
-      sms_message =
-        `
-            Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},\nPlate Number: ${rider.numberPlate},\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${rider.motorBikeMake},\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname},\nRider's Contact:${rider.riderTelNumber},\n
+  Rider.findOne({ numberPlate: trimMessage(text) })
+    .exec()
+    .then(result => {
+      if (result) {
+        let rider = result;
+        try {
+          saccoId = result.sacco;
+          console.log(saccoId);
+        } catch (error) {
+          res.json({ message: `Invalid sacco id ${error}` });
+        }
+        // let riderSacco;
+        // searching for the specific sacco registered to the riders
+        // Sacco.findById({ _id: saccoId }).then((sacco) => {
+        //   console.log(sacco);
+        //   riderSacco = sacco;
+        // }).catch(err => {
+        //   console.log(err);
+        // })
+        sms_message = `
+            Name: ${rider.riderFname} ${rider.riderSurName} ${
+          rider.riderLname
+        },\nPlate Number: ${
+          rider.numberPlate
+        },\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${
+          rider.motorBikeMake
+        },\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${
+          rider.bikeOwnerLname
+        },\nRider's Contact:${rider.riderTelNumber},\n
             Sacco Contact:`;
-      sendMessage(client_phone_number, sms_message);
-    } else {
-      sms_message = `The rider is not registered.`
-      sendMessage(client_phone_number, sms_message);
-    }
-  })
+        sendMessage(client_phone_number, sms_message);
+      } else {
+        sms_message = `The rider is not registered.`;
+        sendMessage(client_phone_number, sms_message);
+      }
+    })
     .catch(err => {
       res.status(500).send({ message: `internal server error:${err}` });
       sms_message = `Nothing to send`;
-      console.log("unable to send SMS - exception");
+      console.log('unable to send SMS - exception');
     });
   res.status(200).send('OK');
 });
-
-
 
 // admin login endpoint
 app.post('/api/login', (req, res) => {
@@ -200,7 +209,7 @@ app.post('/api/login', (req, res) => {
     if (user === null) {
       res.json(false);
     }
-    bcrypt.compare(password, user.password, function (err, result) {
+    bcrypt.compare(password, user.password, function(err, result) {
       if (result === true) {
         console.log('Valid!');
         let token = jwt.sign({ email: user.email }, 'keyboard cat 4 ever', {
@@ -268,40 +277,42 @@ app.get('/', (req, res) => {
   res.json('this is our first server page');
 });
 
-
 // ...req.body,
 // riderPassportPhoto: req.file.path,
 
-
-app.post("/api/riders", upload.single('riderPassportPhoto'), (req, res, next) => {
-// console.log(req.body.riderPassportPhoto);
-req.body.riderPassportPhoto = '';
-  const riders = new Rider({
-    ...req.body
-  })
-  riders
-    .save()
-    .then(result => {
-      console.log(result);
-      res.status(201).json({
-        message: "Registered Rider successfully",
-        createdProduct: {
-          riderFname: result.riderFname,
+app.post(
+  '/api/riders',
+  upload.single('riderPassportPhoto'),
+  (req, res, next) => {
+    // console.log(req.body.riderPassportPhoto);
+    req.body.riderPassportPhoto = '';
+    const riders = new Rider({
+      ...req.body,
+    });
+    riders
+      .save()
+      .then(result => {
+        console.log(result);
+        res.status(201).json({
+          message: 'Registered Rider successfully',
+          createdProduct: {
+            riderFname: result.riderFname,
             _id: result._id,
             request: {
-                type: 'GET',
-                url: "http://localhost:3000/riders/" + result._id
-            }
-        }
+              type: 'GET',
+              url: 'http://localhost:3000/riders/' + result._id,
+            },
+          },
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          error: err,
+        });
       });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
-      });
-    });
-});
+  }
+);
 
 /* GET ALL RIDERS */
 app.get('/api/riders/email/:email', (req, res) => {
@@ -315,7 +326,7 @@ app.get('/api/riders/email/:email', (req, res) => {
     .populate({
       path: 'sacco',
       match: { email: email },
-      select: ['uniqueSaccoCode -_id']
+      select: ['uniqueSaccoCode -_id'],
     })
     .then(rider => {
       if (!rider)
@@ -358,7 +369,7 @@ app.get('/api/riders/id/:id', (req, res) => {
 
 /* SAVE RIDERS */
 app.post('/api/riders', (req, res) => {
-  console.log(req.body );
+  console.log(req.body);
   const newRider = req.body;
 
   Rider.create(newRider)
@@ -426,7 +437,7 @@ app.get('/api/saccos', (req, res) => {
       .exec()
       .then(saccos => {
         res.status(200).json(saccos);
-        console.log(saccos);
+        // console.log(saccos);
       })
       .catch(err => {
         res.send(`Internal server error${err.stack}`).status(400);
@@ -440,7 +451,7 @@ app.get('/api/saccos', (req, res) => {
       .exec()
       .then(saccos => {
         res.status(200).json(saccos);
-        console.log(saccos);
+        // console.log(saccos);
       })
       .catch(err => {
         res.send(`Internal server error${err.stack}`).status(400);
@@ -451,7 +462,7 @@ app.get('/api/saccos', (req, res) => {
       .exec()
       .then(saccos => {
         res.status(200).json(saccos);
-        console.log(saccos);
+        // console.log(saccos);
       })
       .catch(err => {
         res.send(`Internal server error${err.stack}`).status(400);
@@ -480,7 +491,7 @@ app.get('/api/saccos/:id', (req, res) => {
 //fetch secific sacco based on their emails
 app.get('/api/saccos/email/:email', (req, res) => {
   // parameter
-  let saccoId;
+  let saccoEmail;
   try {
     saccoEmail = req.params.email;
     console.log(saccoEmail);
@@ -511,40 +522,40 @@ app.post('/api/saccos', (req, res) => {
       console.log({ message: 'The sacco was added successfully' });
 
       // creating a nodemailer test account
-      //       nodemailer.createTestAccount((err, account) => {
-      //         const htmlEmail = `
-      // <h3>Login Details</h3>
-      // <ul>
-      // <li>email:${email}</li>
-      // <li>password:${password}</li>
-      // </ul>
-      // `;
-      //         // the accoutn that will be sending the mails
-      //         let transporter = nodemailer.createTransport({
-      //           host: 'stmp.gmail.com',
-      //           port:465,
-      //           secure:false,
-      //           service: 'gmail',
-      //           auth: {
-      //             user: '#######@gmail.com',
-      //             pass: '#######',
-      //           },
-      //         });
+      nodemailer.createTestAccount((err, account) => {
+        const htmlEmail = `
+      <h3>Login Details</h3>
+      <ul>
+      <li>email:${email}</li>
+      <li>password:${password}</li>
+      </ul>
+      `;
+        // the accoutn that will be sending the mails
+        let transporter = nodemailer.createTransport({
+          host: 'stmp.gmail.com',
+          port: 465,
+          secure: false,
+          service: 'gmail',
+          auth: {
+            user: 'agweraenock76@gmail.com',
+            pass: 'agwenchez',
+          },
+        });
 
-      //         // mail options
-      //         let mailOptions = {
-      //           from: `#######@gmail.com`,
-      //           to: email,
-      //           subject: 'Fika-Safe',
-      //           html: htmlEmail,
-      //         };
+        // mail options
+        let mailOptions = {
+          from: `agweraenock7@gmail.com`,
+          to: email,
+          subject: 'Fika-Safe',
+          html: htmlEmail,
+        };
 
-      //         // initiating the nodemailer sending options
-      //         transporter.sendMail(mailOptions, (err, info) => {
-      //           if (err) throw err;
-      //           console.log(info);
-      //         });
-      //       });
+        // initiating the nodemailer sending options
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) throw err;
+          console.log(info);
+        });
+      });
 
       res.status(200).json({ sacco });
     })
@@ -571,22 +582,20 @@ app.delete('/api/saccos/:id', (req, res) => {
     });
 });
 
-
 app.post('/sms', (req, res) => {
   console.log(req.body);
   const newRider = new Rider(req.body);
   // if (!new_sacco._id) new_sacco._id = Schema.Types.ObjectId;
-  newRider.save()
-    .then((sacco) => {
+  newRider
+    .save()
+    .then(sacco => {
       console.log({ message: 'The sacco was added successfully' });
       res.status(200).json({ sacco });
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(400).send({ message: `Unable to add the sacco: ${err}` });
     });
 });
-
-
 
 app.put('/api/saccos/:id', (req, res) => {
   let saccosId;
@@ -624,7 +633,6 @@ app.put('/api/saccos/:id', (req, res) => {
 // }
 
 // "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-
 
 // creating a connection to mongoose
 // 'mongodb://localhost/fika-saf

@@ -8,9 +8,9 @@ import AuthHelperMethods from 'AuthHelperMethods.js';
 //Our higher order component
 import withAuth from 'withAuth.js';
 // i hate relative paths guys please lets implement absolute paths all over our code
-class Dashboard extends Component {
+class NewRider extends Component {
   render(props) {
-    console.log(this.props.match.params.email);
+    console.log(this.props.confirm.email);
     return (
       <>
         <Sidebar
@@ -25,7 +25,7 @@ class Dashboard extends Component {
           className="main-content"
           ref="mainContent"
         >
-          <AddRider email={this.props.match.params.email} />
+          <AddRider email={this.props.confirm.email} />
           <Container fluid>
             <Footer />
           </Container>
@@ -35,4 +35,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default withAuth(NewRider);

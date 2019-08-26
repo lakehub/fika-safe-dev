@@ -87,4 +87,4 @@ class AdminNavbar extends React.Component {
     );
   }
 }
-export default AdminNavbar;
+export default withRouter(AdminNavbar);

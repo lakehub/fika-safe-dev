@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 // reactstrap components
 import {
@@ -17,17 +16,17 @@ import {
   Navbar,
   Nav,
   Container,
-  Media,
-} from 'reactstrap';
+  Media
+} from "reactstrap";
 
-import AuthHelperMethods from 'AuthHelperMethods.js';
+import AuthHelperMethods from "AuthHelperMethods.js";
 
 class AdminNavbar extends React.Component {
   Auth = new AuthHelperMethods();
   /* Add the following into _handleLogout*/
   _handleLogout = () => {
     this.Auth.logout();
-    this.props.history.replace('/login');
+    this.props.history.replace("/login");
   };
   render() {
     return (
