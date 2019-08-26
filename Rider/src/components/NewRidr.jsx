@@ -34,8 +34,8 @@ class Profile extends React.Component {
       riderPassportPhoto: {},
       riderBase: '',
       drivingLicense: '',
-      DLIssueDate: '5/5/2018',
-      DLExpDate: '5/5/2019',
+      DLIssueDate: '',
+      DLExpDate: '',
 
       bikeOwnerFname: '',
       bikeOwnerLname: '',
@@ -46,8 +46,8 @@ class Profile extends React.Component {
       motorBikeMake: '',
       motorBikeBrand: '',
       insuranceNumber: '',
-      insuranceIssueDate: '5/5/2018',
-      insuranceExpDate: '5/5/2019',
+      insuranceIssueDate: '',
+      insuranceExpDate: '',
       numberPlate: '',
 
       // created,
@@ -68,12 +68,14 @@ class Profile extends React.Component {
   }
 
   // fetch data for the specific sacco
-  loadData() {
-    // axios is so messsy
-    fetch(`/${url}api/saccos/email/${this.props.email}`)
+  loadData = () => {
+    // console.log(this.props.email);
+    let email = this.props.email;
+    fetch(`${url}/api/saccos/email/${email}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
+
         let id = data.map(item => item._id);
         // set the state with the id
         console.log(id[0]);
@@ -84,7 +86,7 @@ class Profile extends React.Component {
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
   // handle change
   handleChange = event => {
@@ -126,7 +128,7 @@ class Profile extends React.Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        alert('added rider successfully');
+        // alert('added rider successfully');
       })
       .catch(err => {
         console.log(err);
@@ -173,6 +175,7 @@ class Profile extends React.Component {
       insuranceIssueDate,
       insuranceExpDate,
       numberPlate,
+      sacco,
       uploading,
       images,
 
@@ -180,9 +183,8 @@ class Profile extends React.Component {
       status,
       _id,
       ratings,
-      sacco,
     } = this.state;
-    //console.log(id);
+    console.log(sacco);
 
     // handle some photo sh*t
 
@@ -411,10 +413,10 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              value={moment(DLIssueDate).format('MM-DD-YYYY')}
+                              value={DLIssueDate}
                               name="DLIssueDate"
                               onChange={this.handleChange}
-                              placeholder="Issue date"
+                              placeholder="MM-DD-YYYY"
                               type="text"
                             />
                           </FormGroup>
@@ -429,10 +431,10 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              value={moment(DLExpDate).format('MM-DD-YYYY')}
+                              value={DLExpDate}
                               name="DLExpDate"
                               onChange={this.handleChange}
-                              placeholder="Exp date"
+                              placeholder="MM-DD-YYYY"
                               type="text"
                             />
                           </FormGroup>
@@ -664,9 +666,7 @@ class Profile extends React.Component {
                               Issue Date:
                             </label>
                             <Input
-                              value={moment(insuranceIssueDate).format(
-                                'MM-DD-YYYY'
-                              )}
+                              value={insuranceIssueDate}
                               name="insuranceIssueDate"
                               onChange={this.handleChange}
                               className="form-control-alternative"
@@ -684,13 +684,11 @@ class Profile extends React.Component {
                               Exp Date:
                             </label>
                             <Input
-                              value={moment(insuranceExpDate).format(
-                                'MM-DD-YYYY'
-                              )}
+                              value={insuranceExpDate}
                               name="insuranceExpDate"
                               onChange={this.handleChange}
                               className="form-control-alternative"
-                              placeholder="Exp Date "
+                              placeholder="MM-DD-YYYY"
                               type="text"
                             />
                           </FormGroup>

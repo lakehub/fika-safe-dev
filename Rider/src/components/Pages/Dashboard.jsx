@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from 'components/Navbars/AuthNavbar.jsx';
+import Navbar from 'components/Navbars/SaccoNavbar.jsx';
 import Sidebar from 'components/Sidebar/Sidebar.jsx';
 import Footer from 'components/Footers/AdminFooter.jsx';
 import Header from 'components/Headers/Header.jsx';
@@ -29,9 +29,10 @@ class Dashboard extends Component {
   componentDidMount() {
     this.loadData();
   }
+
   loadData() {
     // axios is so messsy
-    fetch(`${url}/api/riders/email/${this.props.match.params.email}`)
+    fetch(`${url}/api/riders/email/${this.props.confirm.email}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -46,25 +47,26 @@ class Dashboard extends Component {
   }
   render() {
     console.log(this.state.data);
-    const email = this.props.match.params.email;
+    console.log(this.props.confirm.email);
+    const email = this.props.confirm.email;
     console.log(this.props);
     return (
       <>
         <Sidebar
-          email={this.props.match.params.email}
+          email={this.props.confirm.email}
           logo={{
-            innerLink: '/sacco/home',
+            innerLink: '/admin/home',
             imgSrc: require('assets/img/brand/argon-react.png'),
             imgAlt: '...',
           }}
         />
-        <div className="main-content">
+        <div className="main-content" ref="mainContent">
           <Navbar />
           <Header data={this.state.data} />
           <SaccoHome
             // data={this.state.data}
             // data1={this.state.data1}
-            email={this.props.match.params.email}
+            email={this.props.confirm.email}
           />
           <Container fluid>
             <Footer />
@@ -74,4 +76,4 @@ class Dashboard extends Component {
     );
   }
 }
-export default Dashboard;
+export default withAuth(Dashboard);

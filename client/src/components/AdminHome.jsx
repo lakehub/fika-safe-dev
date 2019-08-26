@@ -1,9 +1,12 @@
 import React from "react";
 import Picker from "./DatePicker.jsx";
 import { MDBCol, MDBIcon } from "mdbreact";
+import { Redirect } from "react-router-dom";
 import queryString from "query-string";
 import { withRouter } from "react-router";
-import {url} from 'domain.js'
+import { url } from "domain.js";
+import Filter from "components/Filter.jsx";
+// import Filter from 'components/filter/SaccoFilter.jsx'
 
 import AdminTable from "./AdminTable.jsx";
 
@@ -73,7 +76,7 @@ class TableWhite extends React.Component {
     this.setState({
       query: { status: value }
     });
-    console.log(this.state.query.status);
+    // console.log(this.state.query.status);
   };
 
   // get data from the db and loads it to state
@@ -89,7 +92,7 @@ class TableWhite extends React.Component {
         });
       })
       .catch(err => {
-        console.log(err);
+        alert(err);
       });
   }
 
@@ -162,6 +165,8 @@ class TableWhite extends React.Component {
           </DropdownMenu>
         </UncontrolledDropdown>
 
+        {/* <Filter initFilter={this.props.location} setFilter={this.setFilter} /> */}
+
         <MDBCol style={{ float: "right" }} md="4">
           <form className="form-inline mt-4 mb-4">
             <MDBIcon icon="search" />
@@ -176,9 +181,6 @@ class TableWhite extends React.Component {
             />
           </form>
         </MDBCol>
-        <div style={{ marginLeft: "130px", marginTop: "-43px" }}>
-          <Picker />
-        </div>
         {/* <UncontrolledDropdown style={{ marginTop: "-120px" }} group>
           <DropdownToggle caret color="info" data-toggle="dropdown">
             Status
