@@ -12,7 +12,22 @@ class SaccoProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sacco: {},
+      sacco: {
+        name: "",
+        email: "",
+        registration_number: "",
+        date_founded: "",
+        description: "",
+        address: "",
+        status: "",
+        // location: "",
+        telephone_number: "",
+        postal_code: "",
+        website: "",
+        password: ""
+      },
+      resetPassword1: "",
+      resetPassword2: "",
       id: ""
     };
     console.log(this.props);
@@ -28,6 +43,44 @@ class SaccoProfile extends Component {
     this.loadData();
   }
 
+  // updates the state with the child components data==> this is passed to the child comp
+  handleChange = event => {
+    // event.preventDefault();
+    const sacco = Object.assign({}, this.state.sacco);
+    sacco[event.target.name] = event.target.value;
+
+    this.setState({
+      sacco
+    });
+  };
+
+  handleDateChange = date => {
+    const sacco = Object.assign({}, this.state.sacco);
+    // sacco[event.target.name] = event.target.value;
+    sacco.date_founded = date;
+    this.setState({
+      sacco
+    });
+  };
+
+  handlePasswordChange = event => {
+    event.preventDefault();
+    // const state = Object.assign({}, this.state);
+    // state[event.target.name] = event.target.value;
+
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
+
+  handleSubmit = () => {
+    let updateData = this.state.sacco;
+    if (this.state.resetPassword2) {
+      updateData.password = this.state.resetPassword2;
+    }
+    this.update(updateData);
+  };
+
   loadData() {
     console.log(this.state.id);
     fetch(`${url}/api/saccos/${this.props.match.params.id}`)
@@ -35,7 +88,22 @@ class SaccoProfile extends Component {
         if (response.ok) {
           response.json().then(sacco => {
             console.log(sacco);
-            this.setState({ sacco });
+            this.setState({
+              sacco: {
+                name: sacco.name,
+                email: sacco.email,
+                registration_number: sacco.registration_number,
+                date_founded: sacco.date_founded,
+                description: sacco.description,
+                address: sacco.address,
+                status: sacco.status,
+                // location: sacco.location,
+                telephone_number: sacco.telephone_number,
+                postal_code: sacco.postal_code,
+                website: sacco.website,
+                password: sacco.password
+              }
+            });
           });
         } else {
           response.text().then(error => {
@@ -48,12 +116,16 @@ class SaccoProfile extends Component {
       });
   }
   // saves the data to the database
-  update = data => {
+  onChange = event => {
+    // let updateData = this.state.sacco;
+    // if (this.state.resetPassword2) {
+    //   updateData.password = this.state.resetPassword2;
+    // }
+    event.preventDefault();
     fetch(`${url}/api/saccos/${this.props.match.params.id}`, {
       method: "PUT",
-      body: JSON.stringify({
-        data
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(this.state.sacco)
     })
       .then(response => {
         response.json().then(response => {
@@ -61,6 +133,7 @@ class SaccoProfile extends Component {
           this.setState({
             sacco: response
           });
+          window.alert("Update successfull");
         });
       })
       .catch(err => {
@@ -81,7 +154,13 @@ class SaccoProfile extends Component {
         />
         <div className="main-content" ref="mainContent">
           <Navbar />
-          <Profile saveData={this.update} sacco={this.state.sacco} />
+          <Profile
+            state={this.state}
+            handleChange={this.handleChange}
+            handleSubmit={this.onChange}
+            handleDateChange={this.handleDateChange}
+            handlePasswordChange={this.handlePasswordChange}
+          />
           <Container fluid>
             <Footer />
           </Container>

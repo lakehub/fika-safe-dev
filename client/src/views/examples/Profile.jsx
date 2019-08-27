@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 // reactstrap components
 
 import {
@@ -13,35 +13,35 @@ import {
   Input,
   Container,
   Row,
-  Col,
-} from 'reactstrap';
+  Col
+} from "reactstrap";
 // core components
-import UserHeader from 'components/Headers/UserHeader.jsx';
-import AdminNavbar from 'components/Navbars/AdminNavbar.jsx';
-import AdminFooter from 'components/Footers/AdminFooter.jsx';
-import Sidebar from 'components/Sidebar/Sidebar.jsx';
-import routes from 'routes.js';
+import UserHeader from "components/Headers/UserHeader.jsx";
+import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
+import AdminFooter from "components/Footers/AdminFooter.jsx";
+import Sidebar from "components/Sidebar/Sidebar.jsx";
+import routes from "routes.js";
 
 class Profile extends React.Component {
   constructor() {
     super();
     this.state = {
       red: true,
-      name: 'active',
+      name: "active"
     };
 
     // onDeactivate:
   }
 
   // side bar thingy
-  componentDidUpdate(e) {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-    this.refs.mainContent.scrollTop = 0;
-  }
+  // componentDidUpdate(e) {
+  //   document.documentElement.scrollTop = 0;
+  //   document.scrollingElement.scrollTop = 0;
+  //   this.refs.mainContent.scrollTop = 0;
+  // }
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if (prop.layout === '/admin') {
+      if (prop.layout === "/admin") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -64,7 +64,7 @@ class Profile extends React.Component {
         return routes[i].name;
       }
     }
-    return 'Brand';
+    return "Brand";
   };
 
   onDeactivate() {
@@ -72,8 +72,8 @@ class Profile extends React.Component {
     this.setState({ name: !this.state.name });
   }
   render() {
-    let btn_class = this.state.red ? 'info' : 'danger';
-    let btn_name = this.state.name ? 'Active' : 'Deactivated';
+    let btn_class = this.state.red ? "info" : "danger";
+    let btn_name = this.state.name ? "Active" : "Deactivated";
 
     return (
       <>
@@ -81,9 +81,9 @@ class Profile extends React.Component {
           {...this.props}
           routes={routes}
           logo={{
-            innerLink: '/admin/index',
-            imgSrc: require('assets/img/brand/argon-react.png'),
-            imgAlt: '...',
+            innerLink: "/admin/index",
+            imgSrc: require("assets/img/brand/argon-react.png"),
+            imgAlt: "..."
           }}
         />
         <div className="main-content" ref="mainContent">
@@ -103,7 +103,7 @@ class Profile extends React.Component {
                   </Row>
 
                   <CardBody
-                    style={{ background: '#e4f0f7' }}
+                    style={{ background: "#e4f0f7" }}
                     className="pt-0 pt-md-4"
                   >
                     <Row>
@@ -121,7 +121,7 @@ class Profile extends React.Component {
                     <div className="text-center">
                       <h3>Ubuntu Sacco</h3>
                       <h3
-                        style={{ background: '#cee0eb', borderRadius: '10px' }}
+                        style={{ background: "#cee0eb", borderRadius: "10px" }}
                       >
                         {btn_name}
                       </h3>

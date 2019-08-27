@@ -41,9 +41,9 @@ export default class AdminRow extends Component {
           <th scope="row">
             <Media className="align-items-center">
               <Media>
-                <a href="http://localhost:3001/admin/user-profile">
+                <Link to={{ pathname: `/admin/sacco-profile/${sacco._id}` }}>
                   <span className="mb-0 text-sm">{sacco.name}</span>
-                </a>
+                </Link>
               </Media>
             </Media>
           </th>
@@ -83,7 +83,7 @@ export default class AdminRow extends Component {
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem onClick={e => e.preventDefault()}>
-                  <Link to={{ pathname: `sacco/profile/${sacco._id}` }}>
+                  <Link to={{ pathname: `/admin/sacco-profile/${sacco._id}` }}>
                     Edit
                   </Link>
                 </DropdownItem>
