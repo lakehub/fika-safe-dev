@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 // reactstrap components
 
 import {
@@ -16,8 +17,6 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.jsx";
-//Our higher order component
-import withAuth from "withAuth.js";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -29,32 +28,6 @@ class Profile extends React.Component {
       name: "active"
     };
   }
-  // lifecycle control
-  componentDidMount() {
-    // this.setState({ id: this.props.id });
-    const sacco = this.props.sacco;
-    this.setState({
-      sacco
-    });
-  }
-
-  // handle change
-  handleChange = event => {
-    const target = event.target;
-    const { name, value } = target;
-
-    event.preventDefault();
-    this.setState({
-      sacco: {
-        [name]: value
-      }
-    });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.saveData(this.state.sacco);
-  };
 
   // onDeactivate:
   onDeactivate() {
@@ -78,9 +51,11 @@ class Profile extends React.Component {
       location,
       telephone_number,
       postal_code,
-      website,
-      password
-    } = this.props.sacco;
+      website
+    } = this.props.state.sacco;
+
+    //handler functions
+    const { handleChange, handleSubmit } = this.props;
     //console.log(id);
     return (
       <>
@@ -127,7 +102,7 @@ class Profile extends React.Component {
                     </div>
                     <div>
                       <i className="ni education_hat mr-2" />
-                      Year Founded: {date_founded}
+                      Year Founded: {date_founded.slice(0, 10)}
                     </div>
                     <hr className="my-4" />
                     <p>{description}</p>
@@ -176,7 +151,7 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               value={name}
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               name="name"
                               placeholder="Sacco Name"
                               type="text"
@@ -194,7 +169,7 @@ class Profile extends React.Component {
                             <Input
                               value={email}
                               name="email"
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               className="form-control-alternative"
                               id="input-email"
                               placeholder="Enter email"
@@ -216,7 +191,7 @@ class Profile extends React.Component {
                               className="form-control-alternative"
                               value={registration_number}
                               name="registration_number"
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               placeholder="Registration Number"
                               type="text"
                             />
@@ -228,13 +203,13 @@ class Profile extends React.Component {
                               className="form-control-label"
                               htmlFor="input-last-name"
                             >
-                              Year Founded
+                              Year Founded[YYYY.MM.DD]
                             </label>
                             <Input
                               className="form-control-alternative"
-                              value={date_founded}
+                              value={date_founded.slice(0, 10)}
                               name="date_founded"
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               placeholder="Year founded"
                               type="text"
                             />
@@ -260,7 +235,7 @@ class Profile extends React.Component {
                             <Input
                               value={address}
                               name="address"
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               className="form-control-alternative"
                               placeholder="Enter Address"
                               type="text"
@@ -281,7 +256,7 @@ class Profile extends React.Component {
                               className="form-control-alternative"
                               value={telephone_number}
                               name="telephone_number"
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               placeholder="Enter Phone Number"
                               type="text"
                             />
@@ -299,7 +274,7 @@ class Profile extends React.Component {
                               className="form-control-alternative"
                               value={postal_code}
                               name="postal_code"
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               placeholder="Postal code"
                               type="number"
                             />
@@ -317,14 +292,14 @@ class Profile extends React.Component {
                               className="form-control-alternative"
                               value={website}
                               name="website"
-                              onChange={this.handleChange}
+                              onChange={handleChange}
                               placeholder="website"
                               type="text"
                             />
                           </FormGroup>
                         </Col>
                       </Row>
-                      <Row>
+                      {/* <Row>
                         <Col lg="6">
                           <FormGroup>
                             <label
@@ -335,6 +310,9 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
+                              value={resetPassword1}
+                              name="resetPassword1"
+                              onChange={handlePasswordChange}
                               id="password"
                               type="password"
                             />
@@ -350,14 +328,14 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              value={password}
-                              name="password"
-                              onChange={this.handleChange}
+                              value={resetPassword2}
+                              name="resetPassword2"
+                              onChange={handlePasswordChange}
                               type="password"
                             />
                           </FormGroup>
                         </Col>
-                      </Row>
+                      </Row> */}
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
@@ -369,7 +347,7 @@ class Profile extends React.Component {
                           className="form-control-alternative"
                           value={description}
                           name="description"
-                          onChange={this.handleChange}
+                          onChange={handleChange}
                           placeholder="A few words about you..."
                           rows="4"
                           type="textarea"
@@ -378,7 +356,7 @@ class Profile extends React.Component {
                       <Button
                         color="info"
                         diabled="true "
-                        onClick={this.handleSubmit}
+                        onClick={handleSubmit}
                       >
                         Save
                       </Button>

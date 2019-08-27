@@ -597,32 +597,46 @@ app.post('/sms', (req, res) => {
     });
 });
 
-app.put('/api/saccos/:id', (req, res) => {
-  let saccosId;
-  console.log(req.params.id);
+app.put("/api/saccos/:id", async (request, response) => {
+  console.log(request.body)
   try {
-    saccosId = req.params.id;
+      var person = await Sacco.findById(request.params.id).exec();
+      person.set(request.body);
+      var result = await person.save();
+      console.log(result);
+      response.send(result);
   } catch (error) {
-    res.status(400).send({ message: `Invalid saccos ID:${saccosId}` });
+      response.status(500).send(error);
   }
-  const newSacco = req.body;
-
-  Sacco.findByIdAndUpdate({ _id: saccosId }, newSacco, {
-    returnNewDocument: true,
-    new: true,
-    strict: false,
-  })
-    .find({ _id: saccosId })
-    .then(updatedSacco => {
-      res.json(updatedSacco);
-    })
-    .catch(err => {
-      console.log(err);
-      res
-        .status(500)
-        .json({ message: `Unable to update the saccos information ${err}` });
-    });
 });
+
+// app.put('/api/saccos/:id', (req, res) => {
+//   let saccosId;
+//   console.log(req.params.id);
+//   try {
+//     saccosId = req.params.id;
+//   } catch (error) {
+//     res.status(400).send({ message: `Invalid saccos ID:${saccosId}` });
+//   }
+//   const newSacco = req.body;
+//   console.log(req.body)
+
+//   Sacco.findByIdAndUpdate({ _id: saccosId }, newSacco, {
+//     returnNewDocument: true,
+//     new: true,
+//     strict: false,
+//   })
+//     .find({ _id: saccosId })
+//     .then(updatedSacco => {
+//       res.json(updatedSacco);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res
+//         .status(500)
+//         .json({ message: `Unable to update the saccos information ${err}` });
+//     });
+// });
 
 // if(process.env.NODE_ENV ==='production'){
 //   app.use(express.static('client/build'))
