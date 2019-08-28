@@ -20,6 +20,8 @@ const cors = require('cors');
 // const cloudinary = require('cloudinary')
 // const formData = require('express-form-data')
 
+//  "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Rider"
+
 // const port = process.env.PORT || 4040;
 app.use(logger('dev'));
 app.use('/uploads', express.static('uploads'));
