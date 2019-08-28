@@ -182,24 +182,22 @@ app.post('/sms', (req, res) => {
         // })
         sms_message = `
         ---RIDER INFORMATION---
-        Rider's Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},\n
-        Rider's Base: ${rider.riderBase},\n
-        Rider's Tel: ${rider.riderTelNumber},
-        \n
+        \nRider's Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},
+        \nRider's Base: ${rider.riderBase},
+        \nRider's Tel: ${rider.riderTelNumber},
+        
         ---BIKE INFORMATION---
-        Plate Number: ${rider.numberPlate},\n
-        Bike's Brand: ${rider.motorBikeBrand},\n
-        Bike's Make: ${rider.motorBikeMake},\n
-        Bike's Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname},
-        \n
+        \nPlate Number: ${rider.numberPlate},
+        \nBike's Brand: ${rider.motorBikeBrand},
+        \nBike's Make: ${rider.motorBikeMake},
+        \nBike's Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname}
+
         ---SACCO INFORMATION---
-        Sacco Name:${rider.sacco.name},\n
-        Sacco Code:${rider.sacco.uniqueSaccoCode},\n
-        Sacco Tel:${rider.sacco.telephone_number}
-        \n
+        \nSacco Name:${rider.sacco.name},
+        \nSacco Code:${rider.sacco.uniqueSaccoCode},
+        \nSacco Tel:${rider.sacco.telephone_number}
         ---verified---
         `;
-
         sendMessage(client_phone_number, sms_message);
       } else {
         sms_message = `The rider is not registered.`;
