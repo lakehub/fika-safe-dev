@@ -182,20 +182,23 @@ app.post('/sms', (req, res) => {
         // })
         sms_message = `
         ---RIDER INFORMATION---
-        \nRider's Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},
-        \nRider's Base: ${rider.riderBase},
-        \nRider's Tel: ${rider.riderTelNumber},\n
-        
-        \n---BIKE INFORMATION---
-        \nPlate Number: ${rider.numberPlate},
-        \nBike's Make: ${rider.motorBikeMake},
-        \nBike's Brand: ${rider.motorBikeBrand},
-        \nBike's Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname}\n
-
-        \n---SACCO INFORMATION---
-        \nsacco Name:${rider.sacco.name},
-        \nSacco Code:${rider.sacco.uniqueSaccoCode},
-        \nSacco Tel:${rider.sacco.telephone_number}`;
+        Rider's Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},\n
+        Rider's Base: ${rider.riderBase},\n
+        Rider's Tel: ${rider.riderTelNumber},
+        \n
+        ---BIKE INFORMATION---
+        Plate Number: ${rider.numberPlate},\n
+        Bike's Brand: ${rider.motorBikeBrand},\n
+        Bike's Make: ${rider.motorBikeMake},\n
+        Bike's Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname},
+        \n
+        ---SACCO INFORMATION---
+        Sacco Name:${rider.sacco.name},\n
+        Sacco Code:${rider.sacco.uniqueSaccoCode},\n
+        Sacco Tel:${rider.sacco.telephone_number}
+        \n
+        ---verified---
+        `;
 
         sendMessage(client_phone_number, sms_message);
       } else {
