@@ -158,16 +158,20 @@ app.post('/sms', (req, res) => {
     return senderMessage.slice(9,);
   }
   Rider.findOne({ numberPlate: trimMessage(text) })
+  .populate({
+    path: 'sacco',
+  })
     .exec()
     .then(result => {
       if (result) {
         let rider = result;
-        try {
-          saccoId = result.sacco;
-          console.log(saccoId);
-        } catch (error) {
-          res.json({ message: `Invalid sacco id ${error}` });
-        }
+        console.log(rider)
+        // try {
+        //   saccoId = result.sacco;
+        //   console.log(saccoId);
+        // } catch (error) {
+        //   res.json({ message: `Invalid sacco id ${error}` });
+        // }
         // let riderSacco;
         // searching for the specific sacco registered to the riders
         // Sacco.findById({ _id: saccoId }).then((sacco) => {
@@ -177,16 +181,16 @@ app.post('/sms', (req, res) => {
         //   console.log(err);
         // })
         sms_message = `
-            Name: ${rider.riderFname} ${rider.riderSurName} ${
+          Name: ${rider.riderFname} ${rider.riderSurName} ${
           rider.riderLname
         },\nPlate Number: ${
           rider.numberPlate
-        },\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${
+        },\nsacco:${rider.sacco.name} ,\nSacco Leader: ${rider.sacco.saccoLeaderFname} ${rider.sacco.saccoLeaderLname} ,Motorbike Make: ${
           rider.motorBikeMake
-        },\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${
+        },\n Sacco Code:${rider.sacco.uniqueSaccoCode},\nMotorbike Owner: ${rider.bikeOwnerFname} ${
           rider.bikeOwnerLname
-        },\nRider's Contact:${rider.riderTelNumber},\n
-            Sacco Contact:`;
+        },\nRider's Contact:${rider.riderTelNumber},
+        \nSacco Contact:${rider.sacco.telephone_number}`;
         sendMessage(client_phone_number, sms_message);
       } else {
         sms_message = `The rider is not registered.`;
