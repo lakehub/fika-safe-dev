@@ -1,10 +1,5 @@
 import React, { Component } from "react";
 import {
-  Button,
-  Card,
-  CardHeader,
-  NavbarBrand,
-  CardBody,
   FormGroup,
   Form,
   Input,
@@ -12,9 +7,7 @@ import {
   InputGroupText,
   InputGroup,
   Row,
-  Container,
-  Col
-} from "reactstrap";
+  Container} from "reactstrap";
 import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
 import AuthFooter from "components/Footers/AuthFooter.jsx";
 // import Auth from 'layouts/Auth.jsx';
