@@ -155,7 +155,7 @@ app.post('/sms', (req, res) => {
   console.log(`sms received`);
   // fucntion  expression
   function trimMessage(senderMessage) {
-    return senderMesssage.slice(9, 17);
+    return senderMessage.slice(9,);
   }
   Rider.findOne({ numberPlate: trimMessage(text) })
     .exec()
