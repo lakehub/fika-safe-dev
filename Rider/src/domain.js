@@ -1,3 +1,3 @@
 module.exports = {
-  url: "http://localhost:4000"
+  url: "https://fika-safe1.herokuapp.com/"
 };
