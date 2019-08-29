@@ -180,17 +180,6 @@ app.post('/sms', (req, res) => {
         // }).catch(err => {
         //   console.log(err);
         // })
-        sms_message = `
-            Name: ${rider.riderFname} ${rider.riderSurName} ${
-          rider.riderLname
-        },\nPlate Number: ${
-          rider.numberPlate
-        },\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${
-          rider.motorBikeMake
-        },\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${
-          rider.bikeOwnerLname
-        },\nRider's Contact:${rider.riderTelNumber},\n
-            Sacco Contact:`;
 
         sms_message = `
         ---RIDER INFORMATION---
