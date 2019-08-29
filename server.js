@@ -181,22 +181,34 @@ app.post('/sms', (req, res) => {
         //   console.log(err);
         // })
         sms_message = `
+            Name: ${rider.riderFname} ${rider.riderSurName} ${
+          rider.riderLname
+        },\nPlate Number: ${
+          rider.numberPlate
+        },\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${
+          rider.motorBikeMake
+        },\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${
+          rider.bikeOwnerLname
+        },\nRider's Contact:${rider.riderTelNumber},\n
+            Sacco Contact:`;
+
+        sms_message = `
         ---RIDER INFORMATION---
-        \nRider's Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLname},
-        \nRider's Base: ${rider.riderBase},
-        \nRider's Tel: ${rider.riderTelNumber},
+        Rider's Name: ${rider.riderFname} ${rider.riderSurName} ${rider.riderLnam
+        },\nRider's Base: ${rider.riderBase
+        },\nRider's Tel: ${rider.riderTelNumber},
         
         ---BIKE INFORMATION---
-        \nPlate Number: ${rider.numberPlate},
-        \nBike's Brand: ${rider.motorBikeBrand},
-        \nBike's Make: ${rider.motorBikeMake},
-        \nBike's Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname}
+        Plate Number: ${rider.numberPlate
+        },\nBike's Brand: ${rider.motorBikeBrand
+        },\nBike's Make: ${rider.motorBikeMake
+        },\nBike's Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname}
 
         ---SACCO INFORMATION---
-        \nSacco Name:${rider.sacco.name},
-        \nSacco Code:${rider.sacco.uniqueSaccoCode},
-        \nSacco Tel:${rider.sacco.telephone_number}
-        ---verified---
+        Sacco Name:${rider.sacco.name
+        },\nSacco Code:${rider.sacco.uniqueSaccoCode
+        },\nSacco Tel:${rider.sacco.telephone_number}
+        ---VERIFIED---\n
         `;
         sendMessage(client_phone_number, sms_message);
       } else {
