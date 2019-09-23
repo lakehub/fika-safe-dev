@@ -1,1 +1,1 @@
-web: sh -c 'cd ./Rider/ && npm start'
+web: npm start

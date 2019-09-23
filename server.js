@@ -20,6 +20,8 @@ const cors = require('cors');
 // const cloudinary = require('cloudinary')
 // const formData = require('express-form-data')
 
+//  "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Rider"
+
 // const port = process.env.PORT || 4040;
 app.use(logger('dev'));
 app.use('/uploads', express.static('uploads'));
@@ -153,19 +155,23 @@ app.post('/sms', (req, res) => {
   console.log(`sms received`);
   // fucntion  expression
   function trimMessage(senderMessage) {
-    return senderMesssage.slice(9, 17);
+    return senderMessage.slice(9,);
   }
   Rider.findOne({ numberPlate: trimMessage(text) })
+  .populate({
+    path: 'sacco',
+  })
     .exec()
     .then(result => {
       if (result) {
         let rider = result;
-        try {
-          saccoId = result.sacco;
-          console.log(saccoId);
-        } catch (error) {
-          res.json({ message: `Invalid sacco id ${error}` });
-        }
+        console.log(rider)
+        // try {
+        //   saccoId = result.sacco;
+        //   console.log(saccoId);
+        // } catch (error) {
+        //   res.json({ message: `Invalid sacco id ${error}` });
+        // }
         // let riderSacco;
         // searching for the specific sacco registered to the riders
         // Sacco.findById({ _id: saccoId }).then((sacco) => {
@@ -174,17 +180,25 @@ app.post('/sms', (req, res) => {
         // }).catch(err => {
         //   console.log(err);
         // })
+
         sms_message = `
-            Name: ${rider.riderFname} ${rider.riderSurName} ${
-          rider.riderLname
-        },\nPlate Number: ${
-          rider.numberPlate
-        },\nsacco: ,\nSacco Leader:  ,Motorbike Make: ${
-          rider.motorBikeMake
-        },\n Sacco Code:,\nMotorbike Owner: ${rider.bikeOwnerFname} ${
-          rider.bikeOwnerLname
-        },\nRider's Contact:${rider.riderTelNumber},\n
-            Sacco Contact:`;
+        ---RIDER INFORMATION---
+        \nRider's Name: ${rider.riderFname} ${rider.riderSurName
+        },\nRider's Base: ${rider.riderBase
+        },\nRider's Tel: ${rider.riderTelNumber},
+        
+        ---BIKE INFORMATION---
+        \nPlate Number: ${rider.numberPlate
+        },\nBike's Brand: ${rider.motorBikeBrand
+        },\nBike's Make: ${rider.motorBikeMake
+        },\nBike's Owner: ${rider.bikeOwnerFname} ${rider.bikeOwnerLname}
+
+        ---SACCO INFORMATION---
+        \nSacco Name:${rider.sacco.name
+        },\nSacco Code:${rider.sacco.uniqueSaccoCode
+        },\nSacco Tel:${rider.sacco.telephone_number}
+        ---VERIFIED---\n
+        `;
         sendMessage(client_phone_number, sms_message);
       } else {
         sms_message = `The rider is not registered.`;

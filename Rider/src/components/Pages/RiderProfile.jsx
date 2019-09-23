@@ -6,9 +6,6 @@ import Profile from '../Profile.jsx';
 import { Container } from 'reactstrap';
 import { url } from 'domain.js';
 
-import AuthHelperMethods from 'AuthHelperMethods.js';
-//Our higher order component
-import withAuth from 'withAuth.js';
 class RiderProfile extends Component {
   constructor(props) {
     super(props);
