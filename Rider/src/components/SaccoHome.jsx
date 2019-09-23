@@ -4,7 +4,7 @@ import Picker from './DatePicker.jsx';
 import { MDBCol, MDBIcon } from 'mdbreact';
 import RiderTable from './RiderTable.jsx';
 import { withRouter } from 'react-router';
-import {url} from 'domain.js'
+import { url } from 'domain.js';
 
 import {
   Button,

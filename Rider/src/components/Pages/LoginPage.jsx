@@ -20,7 +20,7 @@ class LoginPage extends React.Component {
     };
   }
   Auth = new AuthHelperMethods(); // instantiating the method helper class
-  // onChange handlers
+
   handleChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
@@ -42,10 +42,6 @@ class LoginPage extends React.Component {
         alert(err);
       });
   };
-  componentWillMount() {
-    /* Here is a great place to redirect someone who is already logged in to the protected route */
-    if (this.Auth.loggedIn()) this.props.history.replace('/');
-  }
 
   render() {
     const { email, password } = this.state;
