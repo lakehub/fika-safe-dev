@@ -38,7 +38,7 @@
     "dotenv": "^8.0.0",
     "error-stack-parser": "2.0.2",
     "eval": "0.1.4",
-    "express": "^4.17.0",
+    "express": "^4.17.3",
     "express-jwt": "5.3.1",
     "is-empty": "1.2.0",
     "jquery": "^3.4.1",
